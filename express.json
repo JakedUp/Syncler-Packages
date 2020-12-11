@@ -45,7 +45,7 @@
       "'s": "s",
       "\"": ""
     },
-    "original_source": "Providers4Syncler: Fast"
+    "original_package": "Providers4Syncler: Fast"
   },
   "zooqle": {
     "name": "Zooqle",
@@ -99,7 +99,7 @@
       "'": "",
       "&": ""
     },
-    "original_source": "Providers4Syncler: Fast"
+    "original_package": "Providers4Syncler: Fast"
   },
   "1337x": {
     "name": "1337X",
@@ -153,7 +153,7 @@
       "'s": "s",
       "\"": ""
     },
-    "original_source": "Providers4Syncler: Fast"
+    "original_package": "Providers4Syncler: Fast"
   },
   "solidtorrents": {
     "name": "Solidtorrents",
@@ -196,7 +196,7 @@
       "'": "",
       "&": ""
     },
-    "original_source": "Providers4Syncler: Fast"
+    "original_package": "Providers4Syncler: Fast"
   },
   "bitlord": {
     "anime": {
@@ -237,7 +237,7 @@
       ".": "",
       ":": ""
     },
-    "original_source": "Providers4Syncler: Squizzle"
+    "original_package": "Providers4Syncler: Squizzle"
   },
   "btdb": {
     "name": "Btdb",
@@ -260,7 +260,7 @@
     "season": {
       "query": "/search/{query}/0/?sort=popular",
       "keywords": [
-        "{title} {seasonCode}",
+        "{title} {season4ode}",
         "{title} season"
       ]
     },
@@ -283,7 +283,7 @@
       "'": "",
       "&": ""
     },
-    "original_source": "Providers4Syncler: Squizzle"
+    "original_package": "Providers4Syncler: Squizzle"
   },
   "eztv": {
     "base_url": "https://eztv.io",
@@ -321,7 +321,7 @@
       "\"": "",
       "'s": "s"
     },
-    "original_source": "Providers4Syncler: Squizzle"
+    "original_package": "Providers4Syncler: Squizzle"
   },
   "glodls": {
     "base_url": "https://glodls.to",
@@ -359,7 +359,7 @@
       ".": "",
       ":": ""
     },
-    "original_source": "Providers4Syncler: Squizzle"
+    "original_package": "Providers4Syncler: Squizzle"
   },
   "ilcorsaronero": {
     "name": "IlCorsaroNero",
@@ -400,7 +400,7 @@
       "'s": "s",
       "\"": ""
     },
-    "original_source": "Providers4Syncler: Squizzle"
+    "original_package": "Providers4Syncler: Squizzle"
   },
   "kickass": {
     "anime": {
@@ -449,7 +449,7 @@
       ".": "",
       ":": ""
     },
-    "original_source": "Providers4Syncler: Squizzle"
+    "original_package": "Providers4Syncler: Squizzle"
   },
   "limetorrents": {
     "anime": {
@@ -495,7 +495,7 @@
       ".": "",
       ":": ""
     },
-    "original_source": "Providers4Syncler: Squizzle"
+    "original_package": "Providers4Syncler: Squizzle"
   },
   "magnetdl": {
     "base_url": "https://www.magnetdl.com",
@@ -531,7 +531,7 @@
       "\"": "",
       "'s": "s"
     },
-    "original_source": "Providers4Syncler: Squizzle"
+    "original_package": "Providers4Syncler: Squizzle"
   },
   "oxtorrent": {
     "anime": {
@@ -575,7 +575,7 @@
       "\"": "",
       "'s": "s"
     },
-    "original_source": "Providers4Syncler: Squizzle"
+    "original_package": "Providers4Syncler: Squizzle"
   },
   "pirateiro": {
     "name": "Pirateiro",
@@ -616,7 +616,7 @@
       "url": "row.querySelector('a.imagnet.icon16').getAttribute('href')"
     },
     "source_is_in_sub_page": false,
-    "original_source": "Providers4Syncler: Squizzle"
+    "original_package": "Providers4Syncler: Squizzle"
   },
   "rutor": {
     "name": "RuTor",
@@ -642,7 +642,7 @@
       "size": "row.querySelector('td:nth-child(4)').innerText",
       "url": "row.querySelector('td:nth-child(2) a:nth-child(1)').getAttribute('href')"
     },
-    "original_source": "Providers4Syncler: Squizzle"
+    "original_package": "Providers4Syncler: Squizzle"
   },
   "skytorrents": {
     "name": "Skytorrents",
@@ -683,7 +683,7 @@
       "'": "",
       "&": ""
     },
-    "original_source": "Providers4Syncler: Squizzle"
+    "original_package": "Providers4Syncler: Squizzle"
   },
   "thepiratebay": {
     "base_url": "https://pirateproxy.live",
@@ -733,7 +733,7 @@
       "\"": "",
       "'s": "s"
     },
-    "original_source": "Providers4Syncler: Squizzle"
+    "original_package": "Providers4Syncler: Squizzle"
   },
   "torrent9": {
     "base_url": "https://ww1.torrent9.to",
@@ -771,7 +771,7 @@
       "\"": "",
       "'s": "s"
     },
-    "original_source": "Providers4Syncler: Squizzle"
+    "original_package": "Providers4Syncler: Squizzle"
   },
   "torrentdownload": {
     "anime": {
@@ -813,7 +813,7 @@
       ".": "",
       ":": ""
     },
-    "original_source": "Providers4Syncler: Squizzle"
+    "original_package": "Providers4Syncler: Squizzle"
   },
   "torrentdownloads": {
     "name": "Torrentdownloads",
@@ -862,7 +862,7 @@
       "'": "",
       "&": ""
     },
-    "original_source": "Providers4Syncler: Squizzle"
+    "original_package": "Providers4Syncler: Squizzle"
   },
   "torrentgalaxy": {
     "name": "Torrentgalaxy",
@@ -911,7 +911,7 @@
       "'": "",
       "&": ""
     },
-    "original_source": "Providers4Syncler: Squizzle"
+    "original_package": "Providers4Syncler: Squizzle"
   },
   "yourbittorrent": {
     "anime": {
@@ -954,7 +954,7 @@
       ".": "",
       ":": ""
     },
-    "original_source": "Providers4Syncler: Squizzle"
+    "original_package": "Providers4Syncler: Squizzle"
   },
   "yts": {
     "name": "YTS",
@@ -988,7 +988,7 @@
       "'s": "s",
       "\"": ""
     },
-    "original_source": "itzAki07: Scraper"
+    "original_package": "itzAki07: Scraper"
   },
   "anirena": {
     "name": "AniRena",
@@ -1035,7 +1035,7 @@
       "'": "",
       "&": ""
     },
-    "original_source": "itzAki07: Scraper"
+    "original_package": "itzAki07: Scraper"
   },
   "corsarored": {
     "name": "Corsaro.Red",
@@ -1083,7 +1083,7 @@
       "size": "size",
       "quality": "description"
     },
-    "original_source": "itzAki07: Scraper"
+    "original_package": "itzAki07: Scraper"
   },
   "nyaa": {
     "name": "Nyaa (Anime)",
@@ -1127,7 +1127,7 @@
       "'s": "s",
       "\"": ""
     },
-    "original_source": "itzAki07: Scraper"
+    "original_package": "itzAki07: Scraper"
   },
   "nyaa2": {
     "name": "Nyaa2",
@@ -1172,7 +1172,7 @@
       "'s": "s",
       "\"": ""
     },
-    "original_source": "itzAki07: Scraper"
+    "original_package": "itzAki07: Scraper"
   },
   "7torr": {
     "name": "7Torr",
@@ -1216,7 +1216,7 @@
       "'s": "s",
       "\"": ""
     },
-    "original_source": "itzAki07: Scraper"
+    "original_package": "itzAki07: Scraper"
   },
   "torlock": {
     "name": "TorLock",
@@ -1266,7 +1266,7 @@
       "'s": "s",
       "\"": ""
     },
-    "original_source": "itzAki07: Scraper"
+    "original_package": "itzAki07: Scraper"
   },
   "anidex": {
     "name": "AniDex",
@@ -1316,6 +1316,6 @@
       "'s": "s",
       "\"": ""
     },
-    "original_source": "itzAki07: Scraper"
+    "original_package": "itzAki07: Scraper"
   }
 }
