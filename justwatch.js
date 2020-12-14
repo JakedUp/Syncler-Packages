@@ -4,7 +4,7 @@
   "id": "com.jakedup.justwatch",
   "version": 1,
   "classPath": "JakedUp.JustWatch",
-  "permaUrl": "hhttps://raw.githubusercontent.com/JakedUp/Syncler-Packages/main/justwatch.js"
+  "permaUrl": "https://raw.githubusercontent.com/JakedUp/Syncler-Packages/main/justwatch.js"
 }
 */
 
