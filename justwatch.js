@@ -4,7 +4,7 @@
   "id": "com.jakedup.justwatch",
   "version": 1,
   "classPath": "JakedUp.JustWatch",
-  "permaUrl": "https://raw.githubusercontent.com/JakedUp/Syncler-Packages/main/justwatch.js"
+  "permaUrl": "hhttps://raw.githubusercontent.com/JakedUp/Syncler-Packages/main/justwatch.js"
 }
 */
 
@@ -69,6 +69,14 @@
       };
     }
     search(env, request) {
+      request.collectionItem = request.movie || request.episode;
+      request.collection = request.collectionItem.show || request.collectionItem;
+      request.meta = {};
+      request.meta.type = request.movie ? 'movie' : 'show';
+      request.meta.title = (request.collection.titles.original||{}).title || request.collection.titles.main.title;
+      request.meta.year = new Date(request.collection.release * 1000).getFullYear();
+      request.meta.runtime = request.meta.type == 'movie' ? '110 min' : '50 min';
+      request.meta.filesize = (parseInt(request.meta.runtime) * 60) * (request.meta.type == 'movie' ? 1000000 : 500000);
 
       var providers = {
         8: {
@@ -133,11 +141,6 @@
         }
       };
 
-      request.type = request.movie ? 'movie' : 'show';
-      request.item = request.type == 'movie' ? request.movie : request.episode;
-      request.item.runtime = request.type == 'movie' ? '110 min' : '50 min';
-      request.item.filesize = (parseInt(request.item.runtime) * 60) * (request.type == 'movie' ? 1000000 : 500000);
-
       var search_justwatch = function(title, year, type) {
         var config = {
           'page_size': 5,
@@ -195,10 +198,7 @@
       }
 
       return new Promise((resolve, reject) => {
-        var title = (request.item.titles.original||{}).title || request.item.titles.main.title;
-        var year = new Date(request.item.release * 1000).getFullYear();
-        var type = request.type;
-        search_justwatch(title, year, type).then(result => {
+        search_justwatch(request.meta.title, request.meta.year, request.meta.type).then(result => {
           var uniques = [];
           var results = [];
           if (result.offers) {
@@ -208,12 +208,12 @@
                 var provider = providers[offer.provider_id];
                 provider.android_ids.forEach(function(android_id) {
                   results.push({
-                    name: `${title} (${year}) (${offer.presentation_type})`,
+                    name: `${request.meta.title} (${request.meta.year}) (${offer.presentation_type.toUpperCase()})`,
                     androidPackageName: android_id,
                     androidPackageData: offer.urls.standard_web || offer.urls.deeplink_android_tv,
                     url: offer.urls.standard_web || offer.urls.deeplink_android_tv,
                     quality: offer.presentation_type,
-                    sizeInBytes: request.item.filesize
+                    sizeInBytes: request.meta.filesize
                   });
                 });
               }
