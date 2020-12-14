@@ -195,7 +195,7 @@
       }
 
       return new Promise((resolve, reject) => {
-        var title = request.item.titles.original.title || request.item.titles.main.title;
+        var title = (request.item.titles.original||{}).title || request.item.titles.main.title;
         var year = new Date(request.item.release * 1000).getFullYear();
         var type = request.type;
         search_justwatch(title, year, type).then(result => {
@@ -208,6 +208,7 @@
                 var provider = providers[offer.provider_id];
                 provider.android_ids.forEach(function(android_id) {
                   results.push({
+                    name: `${title} (${year}) (${offer.presentation_type})`,
                     androidPackageName: android_id,
                     androidPackageData: offer.urls.standard_web || offer.urls.deeplink_android_tv,
                     url: offer.urls.standard_web || offer.urls.deeplink_android_tv,
