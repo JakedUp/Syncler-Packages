@@ -1,4 +1,4 @@
-# Express - JustWatch:
+# Kosmos - JustWatch:
 
 ## JustWatch Provider (Streaming Services)
 
