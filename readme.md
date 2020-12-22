@@ -4,7 +4,7 @@
 
 ### All Known Sources (Including Orion Search)
    * *Use only with a valid Orion API key; If an invalid key is provided, all sources from Orion's Wako package will be missing*
-   * [https://syncler-providers.000webhostapp.com/express-hybrid.json?orion-api-key=ABCDEFGHIJKLMNOPQRSTUVWXYZ123456](https://syncler-providers.000webhostapp.com/express-hybrid.json?orion-api-key=ABCDEFGHIJKLMNOPQRSTUVWXYZ123456) (use your own API key!)
+   * [https://syncler-providers.000webhostapp.com/express-hybrid.json?orion-api-key=ABCDEFGHIJKLMNOPQRSTUVWXYZ123456](https://syncler-providers.000webhostapp.com/express-hybrid.json?orion-api-key=) (use your own API key!)
 
 ### All Known Sources (Excluding Orion Search)
    * *Use this if you want all of the sources from Orion's Wako package, but have no intention on using the Orion service itself*
@@ -16,10 +16,10 @@
 
 **Sources Used:**
 
-* [https://wako.orionoid.com/ABCDEFGHIJKLMNOPQRSTUVWXYZ123456](https://wako.orionoid.com/ABCDEFGHIJKLMNOPQRSTUVWXYZ123456)
-* [https://raw.githubusercontent.com/providers4syncler/providers/main/fast](https://raw.githubusercontent.com/providers4syncler/providers/main/fast)
-* [https://raw.githubusercontent.com/providers4syncler/providers/main/squizzle](https://raw.githubusercontent.com/providers4syncler/providers/main/squizzle)
-* [https://raw.githubusercontent.com/itzAki07/scraper/main/Wako.txt](https://raw.githubusercontent.com/itzAki07/scraper/main/Wako.txt)
+* `https://wako.orionoid.com/ABCDEFGHIJKLMNOPQRSTUVWXYZ123456`
+* `https://raw.githubusercontent.com/providers4syncler/providers/main/fast`
+* `https://raw.githubusercontent.com/providers4syncler/providers/main/squizzle`
+* `https://raw.githubusercontent.com/itzAki07/scraper/main/Wako.txt`
 
 &#x200B;
 
