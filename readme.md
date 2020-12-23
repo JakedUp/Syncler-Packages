@@ -19,7 +19,7 @@
 * `https://wako.orionoid.com/ABCDEFGHIJKLMNOPQRSTUVWXYZ123456`
 * `https://raw.githubusercontent.com/providers4syncler/providers/main/fast`
 * `https://raw.githubusercontent.com/providers4syncler/providers/main/squizzle`
-* `https://raw.githubusercontent.com/itzAki07/scraper/main/Wako.txt`
+* `https://raw.githubusercontent.com/itzAki07/scraper/main/scraper.json`
 
 &#x200B;
 
