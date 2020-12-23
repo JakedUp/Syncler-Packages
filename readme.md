@@ -4,15 +4,15 @@
 
 ### All Known Sources (Including Orion Search)
    * *Provide an Orion API key to include the Orion Custom search provider as you have configured it in the Orion Panel*
-   * [https://syncler-providers.000webhostapp.com/express-hybrid.json?orion-api-key=ABCDEFGHIJKLMNOPQRSTUVWXYZ123456](https://syncler-providers.000webhostapp.com/express-hybrid.json?orion-api-key=) (use your own API key!)
+   * [https://syncler-providers.herokuapp.com/syncler/express-hybrid.json?orion-api-key=ABCDEFGHIJKLMNOPQRSTUVWXYZ123456](https://syncler-providers.herokuapp.com/syncler/express-hybrid.json?orion-api-key=) (use your own API key!)
 
 ### All Known Sources (Excluding Orion Search)
    * *Use this if you want all of the sources from Orion's Wako package, but have no intention on using the Orion service itself*
-   * [https://syncler-providers.000webhostapp.com/express-hybrid.json](https://syncler-providers.000webhostapp.com/express-hybrid.json)
+   * [https://syncler-providers.herokuapp.com/syncler/express-hybrid.json](https://syncler-providers.herokuapp.com/syncler/express-hybrid.json)
 
 ### Only Include Sources Not Found In Orion's Package
    * *Use this if you do not trust giving your API key to a third party, and plan on installing Orion's Wako package separately*
-   * [https://syncler-providers.000webhostapp.com/express-hybrid.json?exclude-orion=true](https://syncler-providers.000webhostapp.com/express-hybrid.json?exclude-orion=true)
+   * [https://syncler-providers.herokuapp.com/syncler/express-hybrid.json?exclude-orion=true](https://syncler-providers.herokuapp.com/syncler/express-hybrid.json?exclude-orion=true)
 
 **Sources Used:**
 
@@ -29,12 +29,12 @@
 
 ### JustWatch (Default Streaming Providers)
    * *This searches popular streaming services and attempts to deep link within those apps that the user has installed*
-   * [https://syncler-providers.000webhostapp.com/kosmos-justwatch.js](https://syncler-providers.000webhostapp.com/kosmos-justwatch.js)
+   * [https://syncler-providers.herokuapp.com/syncler/kosmos-justwatch.js](https://syncler-providers.herokuapp.com/syncler/kosmos-justwatch.js)
 
 ### JustWatch (Whitelisted Streaming Providers)
    * *User can whitelist which streaming services they would like searched; Useful for those who have a streaming service app pre-installed on their device, but don't actually use that service*
-   * [https://syncler-providers.000webhostapp.com/kosmos-justwatch.js?whitelist=netflix,hulu,amazon-prime-video,disney,hbo-max,showtime-anytime,fxnow,crackle,tubi,vudu,google-tv,youtube](https://syncler-providers.000webhostapp.com/kosmos-justwatch.js?whitelist=netflix,hulu,amazon-prime-video,disney,hbo-max,showtime-anytime,fxnow,crackle,tubi,vudu,google-tv,youtube)
+   * [https://syncler-providers.herokuapp.com/syncler/kosmos-justwatch.js?whitelist=netflix,hulu,amazon-prime-video,disney,hbo-max,showtime-anytime,fxnow,crackle,tubi,vudu,google-tv,youtube](https://syncler-providers.herokuapp.com/syncler/kosmos-justwatch.js?whitelist=netflix,hulu,amazon-prime-video,disney,hbo-max,showtime-anytime,fxnow,crackle,tubi,vudu,google-tv,youtube)
 
 ### JustWatch (Blacklisted Streaming Providers)
    * *User can blacklist which streaming services they would like searched; Useful for those who have a streaming service app pre-installed on their device, but don't actually use that service*
-   * [https://syncler-providers.000webhostapp.com/kosmos-justwatch.js?blacklist=netflix,hulu,amazon-prime-video,disney,hbo-max,showtime-anytime,fxnow,crackle,tubi,vudu,google-tv,youtube](https://syncler-providers.000webhostapp.com/kosmos-justwatch.js?blacklist=netflix,hulu,amazon-prime-video,disney,hbo-max,showtime-anytime,fxnow,crackle,tubi,vudu,google-tv,youtube)
+   * [https://syncler-providers.herokuapp.com/syncler/kosmos-justwatch.js?blacklist=netflix,hulu,amazon-prime-video,disney,hbo-max,showtime-anytime,fxnow,crackle,tubi,vudu,google-tv,youtube](https://syncler-providers.herokuapp.com/syncler/kosmos-justwatch.js?blacklist=netflix,hulu,amazon-prime-video,disney,hbo-max,showtime-anytime,fxnow,crackle,tubi,vudu,google-tv,youtube)
