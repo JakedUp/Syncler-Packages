@@ -16,6 +16,8 @@
 
 **Sources Used:**
 
+* `https://raw.githubusercontent.com/SynclerScrapers/OpenScrapers/main/express/openscraper.json`
+* `http://express.syncler.ml`
 * `https://wako.orionoid.com/ABCDEFGHIJKLMNOPQRSTUVWXYZ123456`
 * `https://raw.githubusercontent.com/providers4syncler/providers/main/fast`
 * `https://raw.githubusercontent.com/providers4syncler/providers/main/squizzle`
