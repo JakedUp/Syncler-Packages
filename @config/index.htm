@@ -10,7 +10,7 @@
 <meta name="robots" content="index, follow">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover, minimal-ui">
 <meta name="HandheldFriendly" content="true">
-<base target="_parent">
+<base target="_new">
 <!--[END: CONFIG]-->
 <!--[START: METAS]-->
 <title>JakedUp Package Configurator</title>
@@ -70,9 +70,15 @@
           </div>
         </div>
         <div class="mb-5">
-          <h3 class="h5 mb-3 text-decoration-underline">Package URL:</h3>
+          <h3 class="h5 mb-3 text-decoration-underline">{{ key == 'vendor' ? 'Vendor' : 'Package' }} URL:</h3>
           <p>
             <a class="c-package-link btn btn-success" :href="key == 'vendor' ? vendorUrl : expressUrl" target="_new">{{ key == 'vendor' ? vendorUrl : expressUrl }}</a>
+          </p>
+        </div>
+        <div class="mb-5" v-if="key == 'vendor'">
+          <h3 class="h5 mb-3 text-decoration-underline">Shorten URL:</h3>
+          <p>
+            Tip: Use a URL shortening service such as <a href="https://bit.ly/" target="_new">Bit.ly</a> to easily input the vendor manifest URL into the Syncler app.
           </p>
         </div>
       </div>
