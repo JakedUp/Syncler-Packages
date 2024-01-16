@@ -4,12 +4,12 @@ The following Syncler v2 vendor manifests and Syncler v1 packages are available 
 
 ## Syncler v2:
 
-* [Vendor Manifest — Hybrid](https://jakedup.github.io/Syncler-Packages/#vendor-hybrid)
+* [Vendor Manifest — Hybrid](https://jakedup.github.io/Syncler-Packages/@config/#vendor-hybrid)
 
 ## Syncler v1:
 
-* [Express Package — Hybrid](https://jakedup.github.io/Syncler-Packages/#express-hybrid)
-* [Kosmos Package — JustWatch](https://jakedup.github.io/Syncler-Packages/#kosmos-justwatch)
+* [Express Package — Hybrid](https://jakedup.github.io/Syncler-Packages/@config/#express-hybrid)
+* [Kosmos Package — JustWatch](https://jakedup.github.io/Syncler-Packages/@config/#kosmos-justwatch)
 
 ---
 
