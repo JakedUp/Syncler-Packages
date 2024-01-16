@@ -1,0 +1,212 @@
+
+<!DOCTYPE html>
+<html class="js c-html" lang="en-US" prefix="og: http://ogp.me/ns#" data-bs-theme="dark">
+<head>
+<!--[START: CONFIG]-->
+<meta charset="utf-8">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta http-equiv="x-ua-compatible" content="IE=edge, chrome=1">
+<meta http-equiv="cleartype" content="on">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover, minimal-ui">
+<meta name="HandheldFriendly" content="true">
+<base target="_parent">
+<!--[END: CONFIG]-->
+<!--[START: METAS]-->
+<title>JakedUp Package Configurator</title>
+<!--[END: METAS]-->
+<!--[START: CSS]-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="app.css">
+<!--[END: CSS]-->
+</head>
+<body class="c-body">
+<!--[START: APP]-->
+<div class="container">
+  <h1 class="border-bottom pb-2 mb-5">JakedUp Package Configurator</h1>
+  <div class="c-app" v-cloak>
+    <ul class="nav nav-tabs mb-5" id="tabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="vendor-hybrid-tab" data-bs-toggle="pill" data-bs-target="#vendor-hybrid" type="button" role="tab" aria-controls="vendor-hybrid" aria-selected="true">Vendor Manifest — Hybrid</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="express-hybrid-tab" data-bs-toggle="pill" data-bs-target="#express-hybrid" type="button" role="tab" aria-controls="express-hybrid" aria-selected="false">Express Package — Hybrid</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="kosmos-justwatch-tab" data-bs-toggle="pill" data-bs-target="#kosmos-justwatch" type="button" role="tab" aria-controls="kosmos-justwatch" aria-selected="false">Kosmos Package — JustWatch</button>
+      </li>
+    </ul>
+    <div class="tab-content" id="tab-content">
+      <div class="tab-pane fade show active" id="vendor-hybrid" role="tabpanel" aria-labelledby="vendor-hybrid-tab" tabindex="0">
+        <div class="mb-5">
+          <h2 class="mb-3">Vendor Manifest — Hybrid</h2>
+          <p>
+            This intelligently combines all known packages for Syncler on-the-fly into a single hybrid package, de-duping any duplicate providers in the process.
+          </p>
+          <ul class="c-list-inline mb-3">
+            Packages combined include:
+            <li><a href="https://raw.githubusercontent.com/SynclerScrapers/OpenScrapers/main/express/openscraper.json" target="_new">OpenScrapers</a></li>
+            <li><a href="https://wako.orionoid.com/ABCDEFGHIJKLMNOPQRSTUVWXYZ123456" target="_new">Orion - Wako</a></li>
+            <li><a href="https://raw.githubusercontent.com/providers4syncler/providers/main/fast" target="_new">Squizzle - Fast</a></li>
+            <li><a href="https://raw.githubusercontent.com/providers4syncler/providers/main/squizzle" target="_new">Squizzle - Ultimate</a></li>
+            <li><a href="https://raw.githubusercontent.com/itzAki07/scraper/main/scraper.json" target="_new">Aki07 - Unified</a></li>
+          </ul>
+          <p>
+            You can copy the package URL as-is, or if you are an Orion user, you can use the additional configuration options below...
+          </p>
+          <p>
+            To get an Orion API key, please visit: <a href="https://panel.orionoid.com/" target="_new">https://panel.orionoid.com/</a>
+          </p>
+        </div>
+        <div class="mb-5">
+          <h3 class="h5 mb-3 text-decoration-underline">Configuration:</h3>
+          <div class="mb-5">
+            <label for="orion-api-key" class="form-label">Orion API Key:</label>
+            <input type="text" class="form-control text-uppercase" id="orion-api-key" placeholder="ABCDEFGHIJKLMNOPQRSTUVWXYZ123456" v-model.lazy="orion.apiKey">
+            <small class="form-text text-muted">* This will include the Orion custom search provider as you have configured it in the <a href="https://panel.orionoid.com/" target="_new">Orion panel</a> under `Addons` –> `Packages` –> `Wako`</small>
+          </div>
+          <div class="mb-5" v-if="!orion.apiKey">
+            <label for="orion-common-providers" class="form-label">Orion Common Providers:</label>
+            <select class="form-select" id="orion-common-providers" v-model.number.lazy="orion.commonProviders">
+              <option value="1">Include Orion's common providers</option>
+              <option value="0">Exclude Orion's common providers</option>
+            </select>
+            <small class="form-text text-muted">* Only exclude common providers if you plan on installing Orion's Syncler/Wako packages separately from this package -- otherwise, keep this enabled</small>
+          </div>
+        </div>
+        <div class="mb-5">
+          <h3 class="h5 mb-3 text-decoration-underline">Package URL:</h3>
+          <p>
+            <a class="c-package-link btn btn-success" :href="vendorUrl" target="_new">{{ vendorUrl }}</a>
+          </p>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="express-hybrid" role="tabpanel" aria-labelledby="express-hybrid-tab" tabindex="0">
+        <div class="mb-5">
+          <h2 class="mb-3">Express Package — Hybrid</h2>
+          <p>
+            This intelligently combines all known Express packages for Syncler on-the-fly into a single hybrid package, de-duping any duplicate providers in the process.
+          </p>
+          <ul class="c-list-inline mb-3">
+            Packages combined include:
+            <li><a href="https://raw.githubusercontent.com/SynclerScrapers/OpenScrapers/main/express/openscraper.json" target="_new">OpenScrapers</a></li>
+            <li><a href="https://wako.orionoid.com/ABCDEFGHIJKLMNOPQRSTUVWXYZ123456" target="_new">Orion - Wako</a></li>
+            <li><a href="https://raw.githubusercontent.com/providers4syncler/providers/main/fast" target="_new">Squizzle - Fast</a></li>
+            <li><a href="https://raw.githubusercontent.com/providers4syncler/providers/main/squizzle" target="_new">Squizzle - Ultimate</a></li>
+            <li><a href="https://raw.githubusercontent.com/itzAki07/scraper/main/scraper.json" target="_new">Aki07 - Unified</a></li>
+          </ul>
+          <p>
+            You can copy the package URL as-is, or if you are an Orion user, you can use the additional configuration options below...
+          </p>
+          <p>
+            To get an Orion API key, please visit: <a href="https://panel.orionoid.com/" target="_new">https://panel.orionoid.com/</a>
+          </p>
+        </div>
+        <div class="mb-5">
+          <h3 class="h5 mb-3 text-decoration-underline">Configuration:</h3>
+          <div class="mb-5">
+            <label for="orion-api-key" class="form-label">Orion API Key:</label>
+            <input type="text" class="form-control text-uppercase" id="orion-api-key" placeholder="ABCDEFGHIJKLMNOPQRSTUVWXYZ123456" v-model.lazy="orion.apiKey">
+            <small class="form-text text-muted">* This will include the Orion custom search provider as you have configured it in the <a href="https://panel.orionoid.com/" target="_new">Orion panel</a> under `Addons` –> `Packages` –> `Wako`</small>
+          </div>
+          <div class="mb-5" v-if="!orion.apiKey">
+            <label for="orion-common-providers" class="form-label">Orion Common Providers:</label>
+            <select class="form-select" id="orion-common-providers" v-model.number.lazy="orion.commonProviders">
+              <option value="1">Include Orion's common providers</option>
+              <option value="0">Exclude Orion's common providers</option>
+            </select>
+            <small class="form-text text-muted">* Only exclude common providers if you plan on installing Orion's Syncler/Wako packages separately from this package -- otherwise, keep this enabled</small>
+          </div>
+        </div>
+        <div class="mb-5">
+          <h3 class="h5 mb-3 text-decoration-underline">Package URL:</h3>
+          <p>
+            <a class="c-package-link btn btn-success" :href="expressUrl" target="_new">{{ expressUrl }}</a>
+          </p>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="kosmos-justwatch" role="tabpanel" aria-labelledby="kosmos-justwatch-tab" tabindex="0">
+        <div class="mb-5">
+          <h2 class="mb-3">Kosmos Package — JustWatch</h2>
+          <p>
+            This is similar to Syncler's WatchNow provider, but with some enhancements. This will search a pre-defined list of streaming service providers (Netflix, Hulu, Amazon, etc), and will return a link to those apps if a result is found and you have that app installed. Upon clicking a JustWatch result, Syncler will launch the respective streaming app and attempt to deep link you directly to the title. If a deep link cannot be established, you will be taken to the main activity of that application.
+          </p>
+          <p>
+            You can copy the package URL as-is, or you can use the additional configuration options below...
+          </p>
+        </div>
+        <div class="mb-5">
+          <h3 class="h5 mb-3 text-decoration-underline">Configuration:</h3>
+          <div class="mb-5">
+            <div class="form-check">
+              <input type="radio" class="form-check-input" name="justwatch-mode" value="default" id="justwatch1" autocomplete="off" v-model.lazy="justwatch.mode">
+              <label class="form-check-label" for="justwatch1">All Providers:</label>
+            </div>
+            <div class="form-check">
+              <input type="radio" class="form-check-input" name="justwatch-mode" value="whitelist" id="justwatch2" autocomplete="off" v-model.lazy="justwatch.mode">
+              <label class="form-check-label" for="justwatch2">Whitelisted Providers:</label>
+            </div>
+            <div class="form-check">
+              <input type="radio" class="form-check-input" name="justwatch-mode" value="blacklist" id="justwatch3" autocomplete="off" v-model.lazy="justwatch.mode">
+              <label class="form-check-label" for="justwatch3">Blacklisted Providers:</label>
+            </div>
+          </div>
+          <div class="mb-5" v-if="justwatch.mode == 'whitelist'">
+            <label for="justwatch-whitelist" class="form-label">Whitelisted Streaming Providers:</label>
+            <select class="form-select" multiple size="13" id="justwatch-whitelist" v-model.lazy="justwatch.whitelist">
+              <option disabled>Select multiple options</option>
+              <option value="netflix">Netflix</option>
+              <option value="hulu">Hulu</option>
+              <option value="amazon-prime-video">Amazon Prime Video</option>
+              <option value="disney">Disney</option>
+              <option value="hbo-max">HBO Max</option>
+              <option value="showtime-anytime">Showtime Anytime</option>
+              <option value="fxnow">FX Now</option>
+              <option value="crackle">Crackle</option>
+              <option value="tubi">Tubi</option>
+              <option value="vudu">Vudu</option>
+              <option value="google-tv">Google TV</option>
+              <option value="youtube">YouTube</option>
+            </select>
+            <small class="form-text text-muted">* Whitelist which streaming services you would like included; Useful for when you have a streaming app pre-installed, but do not subscribe to it</small>
+          </div>
+          <div class="mb-5" v-if="justwatch.mode == 'blacklist'">
+            <label for="justwatch-blacklist" class="form-label">Blacklisted Streaming Providers:</label>
+            <select class="form-select" multiple size="13" id="justwatch-blacklist" v-model.lazy="justwatch.blacklist">
+              <option disabled>Select multiple options</option>
+              <option value="netflix">Netflix</option>
+              <option value="hulu">Hulu</option>
+              <option value="amazon-prime-video">Amazon Prime Video</option>
+              <option value="disney">Disney</option>
+              <option value="hbo-max">HBO Max</option>
+              <option value="showtime-anytime">Showtime Anytime</option>
+              <option value="fxnow">FX Now</option>
+              <option value="crackle">Crackle</option>
+              <option value="tubi">Tubi</option>
+              <option value="vudu">Vudu</option>
+              <option value="google-tv">Google TV</option>
+              <option value="youtube">YouTube</option>
+            </select>
+            <small class="form-text text-muted">* Blacklist which streaming services you would like ignored; Useful for when you have a streaming app pre-installed, but do not subscribe to it</small>
+          </div>
+        </div>
+        <div class="mb-5">
+          <h3 class="h5 mb-3 text-decoration-underline">Package URL:</h3>
+          <p>
+            <a class="c-package-link btn btn-success" :href="justwatchUrl" target="_new">{{ justwatchUrl }}</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--[END: APP]-->
+<!--[START: JS]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.4.13/vue.global.prod.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.min.js"></script>
+<script src="app.js"></script>
+<!--[END: JS]-->
+</body>
+</html>
