@@ -27,22 +27,16 @@
   <h1 class="border-bottom pb-2 mb-5">JakedUp Package Configurator</h1>
   <div class="c-app" v-cloak>
     <ul class="nav nav-tabs mb-5" id="tabs" role="tablist">
-      <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="vendor-hybrid-tab" data-bs-toggle="pill" data-bs-target="#vendor-hybrid" type="button" role="tab" aria-controls="vendor-hybrid" aria-selected="true">Vendor Manifest — Hybrid</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="express-hybrid-tab" data-bs-toggle="pill" data-bs-target="#express-hybrid" type="button" role="tab" aria-controls="express-hybrid" aria-selected="false">Express Package — Hybrid</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="kosmos-justwatch-tab" data-bs-toggle="pill" data-bs-target="#kosmos-justwatch" type="button" role="tab" aria-controls="kosmos-justwatch" aria-selected="false">Kosmos Package — JustWatch</button>
+      <li class="nav-item" role="presentation" v-for="(value, key, index) in {'vendor-hybrid': 'Vendor Manifest — Hybrid', 'express-hybrid': 'Express Package — Hybrid', 'kosmos-justwatch': 'Kosmos Package — JustWatch'}">
+        <button :class="`nav-link ${index == 0 ? 'active' : ''}`" :id="`${key}-tab`" data-bs-toggle="pill" :data-bs-target="`#${key}`" type="button" role="tab" :aria-controls="key" aria-selected="true">{{ value }}</button>
       </li>
     </ul>
     <div class="tab-content" id="tab-content">
-      <div class="tab-pane fade show active" id="vendor-hybrid" role="tabpanel" aria-labelledby="vendor-hybrid-tab" tabindex="0">
+      <div :class="`tab-pane fade ${index == 0 ? 'show active' : ''}`" :id="`${key}-hybrid`" role="tabpanel" :aria-labelledby="`${key}-hybrid-tab`" tabindex="0" v-for="(key, index) in ['vendor', 'express']">
         <div class="mb-5">
-          <h2 class="mb-3">Vendor Manifest — Hybrid</h2>
+          <h2 class="mb-3">{{ key == 'vendor' ? 'Vendor Manifest' : 'Express Package' }} — Hybrid</h2>
           <p>
-            This intelligently combines all known packages for Syncler on-the-fly into a single hybrid package, de-duping any duplicate providers in the process.
+            This intelligently combines all known {{ key == 'express' ? 'Express' : '' }} packages for Syncler on-the-fly into a single hybrid package, de-duping any duplicate providers in the process.
           </p>
           <ul class="c-list-inline mb-3">
             Packages combined include:
@@ -78,51 +72,7 @@
         <div class="mb-5">
           <h3 class="h5 mb-3 text-decoration-underline">Package URL:</h3>
           <p>
-            <a class="c-package-link btn btn-success" :href="vendorUrl" target="_new">{{ vendorUrl }}</a>
-          </p>
-        </div>
-      </div>
-      <div class="tab-pane fade" id="express-hybrid" role="tabpanel" aria-labelledby="express-hybrid-tab" tabindex="0">
-        <div class="mb-5">
-          <h2 class="mb-3">Express Package — Hybrid</h2>
-          <p>
-            This intelligently combines all known Express packages for Syncler on-the-fly into a single hybrid package, de-duping any duplicate providers in the process.
-          </p>
-          <ul class="c-list-inline mb-3">
-            Packages combined include:
-            <li><a href="https://raw.githubusercontent.com/SynclerScrapers/OpenScrapers/main/express/openscraper.json" target="_new">OpenScrapers</a></li>
-            <li><a href="https://wako.orionoid.com/ABCDEFGHIJKLMNOPQRSTUVWXYZ123456" target="_new">Orion - Wako</a></li>
-            <li><a href="https://raw.githubusercontent.com/providers4syncler/providers/main/fast" target="_new">Squizzle - Fast</a></li>
-            <li><a href="https://raw.githubusercontent.com/providers4syncler/providers/main/squizzle" target="_new">Squizzle - Ultimate</a></li>
-            <li><a href="https://raw.githubusercontent.com/itzAki07/scraper/main/scraper.json" target="_new">Aki07 - Unified</a></li>
-          </ul>
-          <p>
-            You can copy the package URL as-is, or if you are an Orion user, you can use the additional configuration options below...
-          </p>
-          <p>
-            To get an Orion API key, please visit: <a href="https://panel.orionoid.com/" target="_new">https://panel.orionoid.com/</a>
-          </p>
-        </div>
-        <div class="mb-5">
-          <h3 class="h5 mb-3 text-decoration-underline">Configuration:</h3>
-          <div class="mb-5">
-            <label for="orion-api-key" class="form-label">Orion API Key:</label>
-            <input type="text" class="form-control text-uppercase" id="orion-api-key" placeholder="ABCDEFGHIJKLMNOPQRSTUVWXYZ123456" v-model.lazy="orion.apiKey">
-            <small class="form-text text-muted">* This will include the Orion custom search provider as you have configured it in the <a href="https://panel.orionoid.com/" target="_new">Orion panel</a> under `Addons` –> `Packages` –> `Wako`</small>
-          </div>
-          <div class="mb-5" v-if="!orion.apiKey">
-            <label for="orion-common-providers" class="form-label">Orion Common Providers:</label>
-            <select class="form-select" id="orion-common-providers" v-model.number.lazy="orion.commonProviders">
-              <option value="1">Include Orion's common providers</option>
-              <option value="0">Exclude Orion's common providers</option>
-            </select>
-            <small class="form-text text-muted">* Only exclude common providers if you plan on installing Orion's Syncler/Wako packages separately from this package -- otherwise, keep this enabled</small>
-          </div>
-        </div>
-        <div class="mb-5">
-          <h3 class="h5 mb-3 text-decoration-underline">Package URL:</h3>
-          <p>
-            <a class="c-package-link btn btn-success" :href="expressUrl" target="_new">{{ expressUrl }}</a>
+            <a class="c-package-link btn btn-success" :href="key == 'vendor' ? vendorUrl : expressUrl" target="_new">{{ key == 'vendor' ? vendorUrl : expressUrl }}</a>
           </p>
         </div>
       </div>
@@ -169,7 +119,7 @@
               <option value="google-tv">Google TV</option>
               <option value="youtube">YouTube</option>
             </select>
-            <small class="form-text text-muted">* Whitelist which streaming services you would like included; Useful for when you have a streaming app pre-installed, but do not subscribe to it</small>
+            <small class="form-text text-muted">* Whitelist which streaming services to include; Useful for when you have a streaming app installed, but do not subscribe to it</small>
           </div>
           <div class="mb-5" v-if="justwatch.mode == 'blacklist'">
             <label for="justwatch-blacklist" class="form-label">Blacklisted Streaming Providers:</label>
@@ -188,7 +138,7 @@
               <option value="google-tv">Google TV</option>
               <option value="youtube">YouTube</option>
             </select>
-            <small class="form-text text-muted">* Blacklist which streaming services you would like ignored; Useful for when you have a streaming app pre-installed, but do not subscribe to it</small>
+            <small class="form-text text-muted">* Blacklist which streaming services to ignore; Useful for when you have a streaming app installed, but do not subscribe to it</small>
           </div>
         </div>
         <div class="mb-5">
