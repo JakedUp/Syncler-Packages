@@ -54,12 +54,13 @@ const App = Vue.createApp({
     }
   },
   mounted() {
+    let $navTabs = jQuery(`.nav-tabs .nav-link`);
     if (window.location.hash) {
-      jQuery(`.nav-tabs .nav-link[data-bs-target="${window.location.hash}"]`).click();
-      jQuery(`.nav-tabs .nav-link`).on('shown.bs.tab', function (event) {
-        window.location.hash = $(event.target).attr('data-bs-target');
-      });
+      $navTabs.filter(`[data-bs-target="${window.location.hash}"]`).click();
     }
+    $navTabs.on('shown.bs.tab', function (event) {
+      window.location.hash = $(event.target).attr('data-bs-target');
+    });
   }
 });
 
