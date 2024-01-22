@@ -19,7 +19,7 @@ const App = Vue.createApp({
         params['orion-api-key'] = this.orion.apiKey;
       }
       if (!this.orion.commonProviders) {
-        params['orion-exclude'] = true;
+        params['exclude-orion'] = true;
       }
       const query = new URLSearchParams(params).toString().replace(/%2C/g, ',');
       return query ? `?${query}` : '';
