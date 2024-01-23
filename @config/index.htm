@@ -40,33 +40,38 @@
           </p>
           <ul class="c-list-inline mb-3">
             Packages combined include:
-            <li><a href="https://raw.githubusercontent.com/SynclerScrapers/OpenScrapers/main/express/openscraper.json" target="_new">OpenScrapers</a></li>
-            <li><a href="https://wako.orionoid.com/ABCDEFGHIJKLMNOPQRSTUVWXYZ123456" target="_new">Orion - Wako</a></li>
-            <li><a href="https://raw.githubusercontent.com/providers4syncler/providers/main/fast" target="_new">Squizzle - Fast</a></li>
-            <li><a href="https://raw.githubusercontent.com/providers4syncler/providers/main/squizzle" target="_new">Squizzle - Ultimate</a></li>
-            <li><a href="https://raw.githubusercontent.com/itzAki07/scraper/main/scraper.json" target="_new">Aki07 - Unified</a></li>
+            <li v-for="(package_url, package_name, pacakge_index) in (key == 'vendor' ? {...express.packages, ...kosmos.packages} : express.packages)"><a :href="package_url" target="_new">{{ package_name }}</a></li>
           </ul>
           <p>
-            You can copy the package URL as-is, or if you are an Orion user, you can use the additional configuration options below...
+            You can copy the package URL as-is, or if you want a customized package, you can use the additional configuration options below...
           </p>
           <p>
-            To get an Orion API key, please visit: <a href="https://panel.orionoid.com/" target="_new">https://panel.orionoid.com/</a>
+            <u>NOTE:</u> To get an Orion API key, please visit: <a href="https://panel.orionoid.com/" target="_new">https://panel.orionoid.com/</a>
           </p>
         </div>
         <div class="mb-5">
           <h3 class="h5 mb-3 text-decoration-underline">Configuration:</h3>
           <div class="mb-5">
             <label for="orion-api-key" class="form-label">Orion API Key:</label>
-            <input type="text" class="form-control text-uppercase" id="orion-api-key" placeholder="ABCDEFGHIJKLMNOPQRSTUVWXYZ123456" v-model.lazy="orion.apiKey">
+            <input type="text" class="form-control text-uppercase" id="orion-api-key" placeholder="ABCDEFGHIJKLMNOPQRSTUVWXYZ123456" v-model="orion.apiKey">
             <small class="form-text text-muted">* This will include the Orion custom search provider as you have configured it in the <a href="https://panel.orionoid.com/" target="_new">Orion panel</a> under `Addons` –> `Packages` –> `Wako`</small>
           </div>
           <div class="mb-5" v-if="!orion.apiKey">
             <label for="orion-common-providers" class="form-label">Orion Common Providers:</label>
-            <select class="form-select" id="orion-common-providers" v-model.number.lazy="orion.commonProviders">
+            <select class="form-select" id="orion-common-providers" v-model.number="orion.commonProviders">
               <option value="1">Include Orion's common providers</option>
               <option value="0">Exclude Orion's common providers</option>
             </select>
             <small class="form-text text-muted">* Only exclude common providers if you plan on installing Orion's Syncler/Wako packages separately from this package -- otherwise, keep this enabled</small>
+          </div>
+          <div class="mb-5" v-if="Object.keys(express.providers).length">
+            <label for="express-blacklist" class="form-label">Blacklisted Providers:</label>
+            <select class="form-select" multiple size="10" id="express-blacklist" v-model="express.blacklist">
+              <option disabled>Select multiple options...</option>
+              <option disabled></option>
+              <option :value="provider_key" v-for="(provider_value, provider_key, provider_index) in express.providers">{{ provider_value.name }}</option>
+            </select>
+            <small class="form-text text-muted">* Blacklist providers to be removed from your custom package -- It is NOT RECOMMENDED to use this feature unless you know what you are doing!</small>
           </div>
         </div>
         <div class="mb-5">
@@ -86,6 +91,9 @@
         <div class="mb-5">
           <h2 class="mb-3">Kosmos Package — JustWatch</h2>
           <p>
+            <u>2024/01/23:</u> Do not use! This package is no longer working due to a change in JustWatch's APIs. Needs to be re-coded from the ground up, which is on my to-do list.
+          </p>
+          <p>
             This is similar to Syncler's WatchNow provider, but with some enhancements. This will search a pre-defined list of streaming service providers (Netflix, Hulu, Amazon, etc), and will return a link to those apps if a result is found and you have that app installed. Upon clicking a JustWatch result, Syncler will launch the respective streaming app and attempt to deep link you directly to the title. If a deep link cannot be established, you will be taken to the main activity of that application.
           </p>
           <p>
@@ -96,56 +104,29 @@
           <h3 class="h5 mb-3 text-decoration-underline">Configuration:</h3>
           <div class="mb-5">
             <div class="form-check">
-              <input type="radio" class="form-check-input" name="justwatch-mode" value="default" id="justwatch1" autocomplete="off" v-model.lazy="justwatch.mode">
-              <label class="form-check-label" for="justwatch1">All Providers:</label>
+              <input type="radio" class="form-check-input" name="justwatch-mode" value="default" id="justwatch1" autocomplete="off" v-model="justwatch.mode">
+              <label class="form-check-label" for="justwatch1">All Providers</label>
             </div>
             <div class="form-check">
-              <input type="radio" class="form-check-input" name="justwatch-mode" value="whitelist" id="justwatch2" autocomplete="off" v-model.lazy="justwatch.mode">
-              <label class="form-check-label" for="justwatch2">Whitelisted Providers:</label>
+              <input type="radio" class="form-check-input" name="justwatch-mode" value="whitelist" id="justwatch2" autocomplete="off" v-model="justwatch.mode">
+              <label class="form-check-label" for="justwatch2">Whitelisted Providers</label>
             </div>
             <div class="form-check">
-              <input type="radio" class="form-check-input" name="justwatch-mode" value="blacklist" id="justwatch3" autocomplete="off" v-model.lazy="justwatch.mode">
-              <label class="form-check-label" for="justwatch3">Blacklisted Providers:</label>
+              <input type="radio" class="form-check-input" name="justwatch-mode" value="blacklist" id="justwatch3" autocomplete="off" v-model="justwatch.mode">
+              <label class="form-check-label" for="justwatch3">Blacklisted Providers</label>
             </div>
           </div>
-          <div class="mb-5" v-if="justwatch.mode == 'whitelist'">
-            <label for="justwatch-whitelist" class="form-label">Whitelisted Streaming Providers:</label>
-            <select class="form-select" multiple size="13" id="justwatch-whitelist" v-model.lazy="justwatch.whitelist">
-              <option disabled>Select multiple options</option>
-              <option value="netflix">Netflix</option>
-              <option value="hulu">Hulu</option>
-              <option value="amazon-prime-video">Amazon Prime Video</option>
-              <option value="disney">Disney</option>
-              <option value="hbo-max">HBO Max</option>
-              <option value="showtime-anytime">Showtime Anytime</option>
-              <option value="fxnow">FX Now</option>
-              <option value="crackle">Crackle</option>
-              <option value="tubi">Tubi</option>
-              <option value="vudu">Vudu</option>
-              <option value="google-tv">Google TV</option>
-              <option value="youtube">YouTube</option>
-            </select>
-            <small class="form-text text-muted">* Whitelist which streaming services to include; Useful for when you have a streaming app installed, but do not subscribe to it</small>
-          </div>
-          <div class="mb-5" v-if="justwatch.mode == 'blacklist'">
-            <label for="justwatch-blacklist" class="form-label">Blacklisted Streaming Providers:</label>
-            <select class="form-select" multiple size="13" id="justwatch-blacklist" v-model.lazy="justwatch.blacklist">
-              <option disabled>Select multiple options</option>
-              <option value="netflix">Netflix</option>
-              <option value="hulu">Hulu</option>
-              <option value="amazon-prime-video">Amazon Prime Video</option>
-              <option value="disney">Disney</option>
-              <option value="hbo-max">HBO Max</option>
-              <option value="showtime-anytime">Showtime Anytime</option>
-              <option value="fxnow">FX Now</option>
-              <option value="crackle">Crackle</option>
-              <option value="tubi">Tubi</option>
-              <option value="vudu">Vudu</option>
-              <option value="google-tv">Google TV</option>
-              <option value="youtube">YouTube</option>
-            </select>
-            <small class="form-text text-muted">* Blacklist which streaming services to ignore; Useful for when you have a streaming app installed, but do not subscribe to it</small>
-          </div>
+          <template v-for="(mode, index) in ['whitelist', 'blacklist']">
+            <div class="mb-5" v-if="justwatch.mode == mode">
+              <label :for="`justwatch-${mode}`" class="form-label">{{ mode == 'whitelist' ? 'Whitelisted' : 'Blacklisted'}} Streaming Providers:</label>
+              <select class="form-select" multiple size="14" :id="`justwatch-${mode}`" v-model="justwatch[mode]">
+                <option disabled>Select multiple options...</option>
+                <option disabled></option>
+                <option :value="provider_key" v-for="(provider_value, provider_key, provider_index) in justwatch.providers">{{ provider_value }}</option>
+              </select>
+              <small class="form-text text-muted">* {{ mode == 'whitelist' ? 'Whitelist' : 'Blacklist'}} which streaming services to {{ mode == 'whitelist' ? 'include' : 'ignore'}}; Useful for when you have a streaming app installed, but do not subscribe to it</small>
+            </div>
+          </template>
         </div>
         <div class="mb-5">
           <h3 class="h5 mb-3 text-decoration-underline">Package URL:</h3>
