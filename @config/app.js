@@ -120,7 +120,7 @@ const App = Vue.createApp({
     });
   },
   mounted() {
-    let $navTabs = $(`#tabs`);
+    let $navTabs = $(`#tabs .nav-link`);
     if (window.location.search) {
       var urlParams = new URLSearchParams(window.location.search);
       $navTabs.filter(`[data-bs-target="#${urlParams.get('id')}"]`).click();
