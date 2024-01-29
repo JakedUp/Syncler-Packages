@@ -26,7 +26,8 @@
 <div class="container">
   <h1 class="border-bottom pb-2 mb-5">JakedUp Package Configurator</h1>
   <div class="c-app" v-cloak>
-    <ul class="nav nav-tabs mb-5" id="tabs" role="tablist">
+    <h3 class="h5 mb-4 text-decoration-underline">Packages:</h3>
+    <ul class="nav nav-pills mb-5 border-bottom pb-5" id="tabs" role="tablist">
       <li class="nav-item" role="presentation" v-for="(value, key, index) in {'vendor-hybrid': 'Vendor Manifest — Hybrid', 'express-hybrid': 'Express Package — Hybrid', 'kosmos-justwatch': 'Kosmos Package — JustWatch'}">
         <button :class="`nav-link ${index == 0 ? 'active' : ''}`" :id="`${key}-tab`" data-bs-toggle="pill" :data-bs-target="`#${key}`" type="button" role="tab" :aria-controls="key" aria-selected="true">{{ value }}</button>
       </li>
@@ -51,44 +52,73 @@
           </p>
         </div>
         <div class="mb-5 border-bottom pb-5">
-          <h3 class="h5 mb-4 text-decoration-underline">Configuration - Orion:</h3>
-          <div class="mb-4">
-            <label for="orion-api-key" class="form-label">Orion API Key:</label>
-            <input type="text" class="form-control text-uppercase" id="orion-api-key" placeholder="ABCDEFGHIJKLMNOPQRSTUVWXYZ123456" v-model="orion.apiKey">
-            <small class="form-text text-muted">* This will include the Orion custom search provider as you have configured it in the <a href="https://panel.orionoid.com/">Orion panel</a> under `Addons` –> `Packages` –> `Wako`</small>
-          </div>
-          <div class="mb-4" v-if="!orion.apiKey">
-            <label for="orion-common-providers" class="form-label">Orion Common Providers:</label>
-            <select class="form-select" id="orion-common-providers" v-model.number="orion.commonProviders">
-              <option value="1">Include Orion's common providers</option>
-              <option value="0">Exclude Orion's common providers</option>
-            </select>
-            <small class="form-text text-muted">* Only exclude common providers if you plan on installing Orion's Syncler/Wako packages manually -- otherwise, keep this enabled</small>
-          </div>
-        </div>
-        <div class="mb-5 border-bottom pb-5">
-          <h3 class="h5 mb-4 text-decoration-underline">Configuration - Jackett:</h3>
-          <div class="mb-4">
-            <label for="jackett-base-url" class="form-label">Jackett Base URL:</label>
-            <input type="text" class="form-control" id="jackett-base-url" placeholder="http://192.168.1.255:9117" v-model="jackett.baseUrl">
-            <small class="form-text text-muted">* <u>NOTE:</u> Jackett is a custom provider that you would host on your own server, and requires an in-depth technical setup. <a href="https://www.reddit.com/r/providers4syncler/comments/1adrc0r/jackett_provider_added_to_jakedup_packages/">More info</a></small>
-          </div>
-          <div class="mb-4">
-            <label for="jackett-api-key" class="form-label">Jackett API Key:</label>
-            <input type="text" class="form-control" id="jackett-api-key" placeholder="abcdefghijklmnopqrstuvwxyz123456" v-model="jackett.apiKey">
-            <small class="form-text text-muted">* <u>NOTE:</u> Jackett is a custom provider that you would host on your own server, and requires an in-depth technical setup. <a href="https://www.reddit.com/r/providers4syncler/comments/1adrc0r/jackett_provider_added_to_jakedup_packages/">More info</a></small>
-          </div>
-        </div>
-        <div class="mb-5 border-bottom pb-5">
-          <h3 class="h5 mb-4 text-decoration-underline">Configuration - Blacklist:</h3>
-          <div class="mb-4" v-if="Object.keys(express.providers).length">
-            <label for="express-blacklist" class="form-label">Blacklisted Providers:</label>
-            <select class="form-select" multiple size="10" id="express-blacklist" v-model="express.blacklist">
-              <option disabled>Select multiple options...</option>
-              <option disabled></option>
-              <option :value="provider_key" v-for="(provider_value, provider_key, provider_index) in express.providers">{{ provider_value.name }}</option>
-            </select>
-            <small class="form-text text-muted">* Blacklist providers to be removed from your custom package -- It is NOT RECOMMENDED to use this feature unless you know what you are doing!</small>
+          <h3 class="h5 mb-4 text-decoration-underline">Configuration:</h3>
+          <div class="accordion" :id="`${key}-accordion`">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="`#${key}-collapse-orion`" aria-expanded="true" :aria-controls="`${key}-collapse-orion`">
+                  Orion
+                </button>
+              </h2>
+              <div :id="`${key}-collapse-orion`" class="accordion-collapse collapse show" :data-bs-parent="`#${key}-accordion`">
+                <div class="accordion-body">
+                  <div class="mb-4">
+                    <label for="orion-api-key" class="form-label">Orion API Key:</label>
+                    <input type="text" class="form-control text-uppercase" id="orion-api-key" placeholder="ABCDEFGHIJKLMNOPQRSTUVWXYZ123456" v-model="orion.apiKey">
+                    <small class="form-text text-muted">* This will include the Orion custom search provider as you have configured it in the <a href="https://panel.orionoid.com/">Orion panel</a> under `Addons` –> `Packages` –> `Wako`</small>
+                  </div>
+                  <div class="mb-4" v-if="!orion.apiKey">
+                    <label for="orion-common-providers" class="form-label">Orion Common Providers:</label>
+                    <select class="form-control form-select" id="orion-common-providers" v-model.number="orion.commonProviders">
+                      <option value="1">Include Orion's common providers</option>
+                      <option value="0">Exclude Orion's common providers</option>
+                    </select>
+                    <small class="form-text text-muted">* Only exclude common providers if you plan on installing Orion's Syncler/Wako packages manually -- otherwise, keep this enabled</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="`#${key}-collapse-jackett`" aria-expanded="false" :aria-controls="`${key}-collapse-jackett`">
+                  Jackett
+                </button>
+              </h2>
+              <div :id="`${key}-collapse-jackett`" class="accordion-collapse collapse" :data-bs-parent="`#${key}-accordion`">
+                <div class="accordion-body">
+                  <div class="mb-4">
+                    <label for="jackett-base-url" class="form-label">Jackett Base URL:</label>
+                    <input type="text" class="form-control" id="jackett-base-url" placeholder="http://192.168.1.255:9117" v-model="jackett.baseUrl">
+                    <small class="form-text text-muted">* <u>NOTE:</u> Jackett is a custom provider that you would host on your own server, and requires an in-depth technical setup. <a href="https://www.reddit.com/r/providers4syncler/comments/1adrc0r/jackett_provider_added_to_jakedup_packages/">More info</a></small>
+                  </div>
+                  <div class="mb-4">
+                    <label for="jackett-api-key" class="form-label">Jackett API Key:</label>
+                    <input type="text" class="form-control" id="jackett-api-key" placeholder="abcdefghijklmnopqrstuvwxyz123456" v-model="jackett.apiKey">
+                    <small class="form-text text-muted">* <u>NOTE:</u> Jackett is a custom provider that you would host on your own server, and requires an in-depth technical setup. <a href="https://www.reddit.com/r/providers4syncler/comments/1adrc0r/jackett_provider_added_to_jakedup_packages/">More info</a></small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="`#${key}-collapse-blacklist`" aria-expanded="false" :aria-controls="`${key}-collapse-blacklist`">
+                  Blacklist
+                </button>
+              </h2>
+              <div :id="`${key}-collapse-blacklist`" class="accordion-collapse collapse" :data-bs-parent="`#${key}-accordion`">
+                <div class="accordion-body">
+                  <div class="mb-4" v-if="Object.keys(express.providers).length">
+                    <label for="express-blacklist" class="form-label">Blacklisted Providers:</label>
+                    <select class="form-control form-select" multiple size="20" id="express-blacklist" v-model="express.blacklist">
+                      <option disabled>Select multiple options...</option>
+                      <option disabled></option>
+                      <option :value="provider_key" v-for="(provider_value, provider_key, provider_index) in express.providers">{{ provider_value.name }}</option>
+                    </select>
+                    <small class="form-text text-muted">* Blacklist providers to be removed from your custom package -- It is NOT RECOMMENDED to use this feature unless you know what you are doing!</small>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="mb-5 border-bottom pb-5">
@@ -119,31 +149,44 @@
         </div>
         <div class="mb-5 border-bottom pb-5">
           <h3 class="h5 mb-4 text-decoration-underline">Configuration:</h3>
-          <div class="mb-4">
-            <div class="form-check">
-              <input type="radio" class="form-check-input" name="justwatch-mode" value="default" id="justwatch1" autocomplete="off" v-model="justwatch.mode">
-              <label class="form-check-label" for="justwatch1">All Providers</label>
-            </div>
-            <div class="form-check">
-              <input type="radio" class="form-check-input" name="justwatch-mode" value="whitelist" id="justwatch2" autocomplete="off" v-model="justwatch.mode">
-              <label class="form-check-label" for="justwatch2">Whitelisted Providers</label>
-            </div>
-            <div class="form-check">
-              <input type="radio" class="form-check-input" name="justwatch-mode" value="blacklist" id="justwatch3" autocomplete="off" v-model="justwatch.mode">
-              <label class="form-check-label" for="justwatch3">Blacklisted Providers</label>
+          <div class="accordion" id="justwatch-accordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#justwatch-collapse-providers" aria-expanded="true" aria-controls="justwatch-collapse-providers">
+                  Providers
+                </button>
+              </h2>
+              <div id="justwatch-collapse-providers" class="accordion-collapse collapse show" data-bs-parent="#justwatch-accordion">
+                <div class="accordion-body">
+                  <div class="mb-4">
+                    <div class="form-check">
+                      <input type="radio" class="form-check-input" name="justwatch-mode" value="default" id="justwatch1" autocomplete="off" v-model="justwatch.mode">
+                      <label class="form-check-label" for="justwatch1">All Providers</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="radio" class="form-check-input" name="justwatch-mode" value="whitelist" id="justwatch2" autocomplete="off" v-model="justwatch.mode">
+                      <label class="form-check-label" for="justwatch2">Whitelisted Providers</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="radio" class="form-check-input" name="justwatch-mode" value="blacklist" id="justwatch3" autocomplete="off" v-model="justwatch.mode">
+                      <label class="form-check-label" for="justwatch3">Blacklisted Providers</label>
+                    </div>
+                  </div>
+                  <template v-for="(mode, index) in ['whitelist', 'blacklist']">
+                    <div class="mb-4" v-if="justwatch.mode == mode">
+                      <label :for="`justwatch-${mode}`" class="form-label">{{ mode == 'whitelist' ? 'Whitelisted' : 'Blacklisted'}} Streaming Providers:</label>
+                      <select class="form-control form-select" multiple size="14" :id="`justwatch-${mode}`" v-model="justwatch[mode]">
+                        <option disabled>Select multiple options...</option>
+                        <option disabled></option>
+                        <option :value="provider_key" v-for="(provider_value, provider_key, provider_index) in justwatch.providers">{{ provider_value }}</option>
+                      </select>
+                      <small class="form-text text-muted">* {{ mode == 'whitelist' ? 'Whitelist' : 'Blacklist'}} which streaming services to {{ mode == 'whitelist' ? 'include' : 'ignore'}}; Useful for when you have a streaming app installed, but do not subscribe to it</small>
+                    </div>
+                  </template>
+                </div>
+              </div>
             </div>
           </div>
-          <template v-for="(mode, index) in ['whitelist', 'blacklist']">
-            <div class="mb-4" v-if="justwatch.mode == mode">
-              <label :for="`justwatch-${mode}`" class="form-label">{{ mode == 'whitelist' ? 'Whitelisted' : 'Blacklisted'}} Streaming Providers:</label>
-              <select class="form-select" multiple size="14" :id="`justwatch-${mode}`" v-model="justwatch[mode]">
-                <option disabled>Select multiple options...</option>
-                <option disabled></option>
-                <option :value="provider_key" v-for="(provider_value, provider_key, provider_index) in justwatch.providers">{{ provider_value }}</option>
-              </select>
-              <small class="form-text text-muted">* {{ mode == 'whitelist' ? 'Whitelist' : 'Blacklist'}} which streaming services to {{ mode == 'whitelist' ? 'include' : 'ignore'}}; Useful for when you have a streaming app installed, but do not subscribe to it</small>
-            </div>
-          </template>
         </div>
         <div class="mb-5 border-bottom pb-5">
           <h3 class="h5 mb-4 text-decoration-underline">Package URL:</h3>
@@ -162,9 +205,9 @@
         If you would like to help subsidize the monthly server costs, please donate a buck or 2 through one of the following links:
       </p>
       <ul class="c-list-inline">
-        <li><a class="btn btn-light" href="https://buymeacoffee.com/JakedUp">Buy Me A Coffee</a></li>
-        <li><a class="btn btn-light" href="https://venmo.com/JustJakedUp">Venmo</a></li>
-        <li><a class="btn btn-light" href="https://paypal.me/JustJakedUp">PayPal</a></li>
+        <li><a class="c-buymeacoffee btn btn-dark" href="https://buymeacoffee.com/JakedUp">Buy Me A Coffee</a></li>
+        <li><a class="c-venmo btn btn-dark" href="https://venmo.com/JustJakedUp">Venmo</a></li>
+        <li><a class="c-paypal btn btn-dark" href="https://paypal.me/JustJakedUp">PayPal</a></li>
       </ul>
     </div>
   </div>

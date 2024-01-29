@@ -6,7 +6,8 @@
 }
 
 [data-bs-theme=dark] .nav-tabs {
-  --bs-nav-tabs-link-active-color: #198754;
+  --bs-nav-tabs-link-active-bg: #198754;
+  /* --bs-nav-tabs-link-active-color: #198754; */
 }
 
 [data-bs-theme=dark] .nav {
@@ -16,6 +17,10 @@
 
 [data-bs-theme=dark] .nav-pills {
   --bs-nav-pills-link-active-bg: #198754;
+}
+
+[data-bs-theme=dark] .nav-pills .nav-link:not(.active) {
+  background-color: #1b1f22;
 }
 
 body {
@@ -30,6 +35,27 @@ a {
 a,
 a:hover {
   color: inherit;
+}
+
+.accordion {
+  --bs-accordion-active-color: #fff;
+  --bs-accordion-active-bg: #198754;
+  --bs-accordion-btn-color: #fff;
+  --bs-accordion-btn-bg: #1b1f22;
+  --bs-accordion-body-padding-y: 2rem;
+}
+
+.nav-pills > .nav-item {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.form-control {
+  background-color: #1b1f22;
+}
+
+.form-control::placeholder {
+  opacity: .33333;
 }
 
 .container,
@@ -100,7 +126,8 @@ a:hover {
   font-weight: bold;
 }
 
-.c-tab-pane [class*="pb-"] > :last-child {
+.c-tab-pane [class*="pb-"] > :last-child,
+.c-tab-pane .accordion-body > :last-child {
   margin-bottom: 0!important;
 }
 
@@ -124,4 +151,17 @@ a:hover {
 
 .c-donate-links .c-list-inline li + li:before {
   content: " | ";
+}
+
+.c-buymeacoffee {
+  color: #000;
+  background-color: #FFDD00;
+}
+
+.c-venmo {
+  background-color: #3D95CE;
+}
+
+.c-paypal {
+  background-color: #003087;
 }
