@@ -19,6 +19,10 @@ const App = Vue.createApp({
         apiKey: '',
         commonProviders: 1
       },
+      jackett: {
+        baseUrl: '',
+        apiKey: ''
+      },
       kosmos: {
         packages: {
           /*
@@ -55,6 +59,10 @@ const App = Vue.createApp({
       }
       if (!this.orion.commonProviders) {
         params['exclude-orion'] = true;
+      }
+      if (this.jackett.baseUrl && this.jackett.apiKey) {
+        params['jackett-base-url'] = this.jackett.baseUrl.replace(/[\/\s]+$/, '');
+        params['jackett-api-key'] = this.jackett.apiKey;
       }
       if (this.express.blacklist.length) {
         params.blacklist = this.express.blacklist.join(',');

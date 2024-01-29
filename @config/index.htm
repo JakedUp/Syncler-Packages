@@ -31,40 +31,57 @@
         <button :class="`nav-link ${index == 0 ? 'active' : ''}`" :id="`${key}-tab`" data-bs-toggle="pill" :data-bs-target="`#${key}`" type="button" role="tab" :aria-controls="key" aria-selected="true">{{ value }}</button>
       </li>
     </ul>
-    <div class="tab-content" id="tab-content">
-      <div :class="`tab-pane fade ${index == 0 ? 'show active' : ''}`" :id="`${key}-hybrid`" role="tabpanel" :aria-labelledby="`${key}-hybrid-tab`" tabindex="0" v-for="(key, index) in ['vendor', 'express']">
-        <div class="mb-5">
-          <h2 class="mb-3">{{ key == 'vendor' ? 'Vendor Manifest' : 'Express Package' }} — Hybrid</h2>
+    <div class="c-tab-container tab-content" id="tab-content">
+      <div :class="`c-tab-pane tab-pane fade ${index == 0 ? 'show active' : ''}`" :id="`${key}-hybrid`" role="tabpanel" :aria-labelledby="`${key}-hybrid-tab`" tabindex="0" v-for="(key, index) in ['vendor', 'express']">
+        <div class="mb-5 border-bottom pb-5">
+          <h2 class="mb-4">{{ key == 'vendor' ? 'Vendor Manifest' : 'Express Package' }} — Hybrid</h2>
           <p>
             This intelligently combines all known {{ key == 'express' ? 'Express' : '' }} packages for Syncler on-the-fly into a single hybrid package, de-duping any duplicate providers in the process.
           </p>
-          <ul class="c-list-inline mb-3">
+          <ul class="c-list-inline mb-4">
             Packages combined include:
-            <li v-for="(package_url, package_name, pacakge_index) in (key == 'vendor' ? {...express.packages, ...kosmos.packages} : express.packages)"><a :href="package_url" target="_new">{{ package_name }}</a></li>
+            <li v-for="(package_url, package_name, pacakge_index) in (key == 'vendor' ? {...express.packages, ...kosmos.packages} : express.packages)"><a :href="package_url">{{ package_name }}</a></li>
+            + custom providers
           </ul>
           <p>
             You can copy the package URL as-is, or if you want a customized package, you can use the additional configuration options below...
           </p>
           <p>
-            <u>NOTE:</u> To get an Orion API key, please visit: <a href="https://panel.orionoid.com/" target="_new">https://panel.orionoid.com/</a>
+            <u>NOTE:</u> To get an Orion API key, please visit: <a href="https://panel.orionoid.com/">https://panel.orionoid.com/</a>
           </p>
         </div>
-        <div class="mb-5">
-          <h3 class="h5 mb-3 text-decoration-underline">Configuration:</h3>
-          <div class="mb-5">
+        <div class="mb-5 border-bottom pb-5">
+          <h3 class="h5 mb-4 text-decoration-underline">Configuration - Orion:</h3>
+          <div class="mb-4">
             <label for="orion-api-key" class="form-label">Orion API Key:</label>
             <input type="text" class="form-control text-uppercase" id="orion-api-key" placeholder="ABCDEFGHIJKLMNOPQRSTUVWXYZ123456" v-model="orion.apiKey">
-            <small class="form-text text-muted">* This will include the Orion custom search provider as you have configured it in the <a href="https://panel.orionoid.com/" target="_new">Orion panel</a> under `Addons` –> `Packages` –> `Wako`</small>
+            <small class="form-text text-muted">* This will include the Orion custom search provider as you have configured it in the <a href="https://panel.orionoid.com/">Orion panel</a> under `Addons` –> `Packages` –> `Wako`</small>
           </div>
-          <div class="mb-5" v-if="!orion.apiKey">
+          <div class="mb-4" v-if="!orion.apiKey">
             <label for="orion-common-providers" class="form-label">Orion Common Providers:</label>
             <select class="form-select" id="orion-common-providers" v-model.number="orion.commonProviders">
               <option value="1">Include Orion's common providers</option>
               <option value="0">Exclude Orion's common providers</option>
             </select>
-            <small class="form-text text-muted">* Only exclude common providers if you plan on installing Orion's Syncler/Wako packages separately from this package -- otherwise, keep this enabled</small>
+            <small class="form-text text-muted">* Only exclude common providers if you plan on installing Orion's Syncler/Wako packages manually -- otherwise, keep this enabled</small>
           </div>
-          <div class="mb-5" v-if="Object.keys(express.providers).length">
+        </div>
+        <div class="mb-5 border-bottom pb-5">
+          <h3 class="h5 mb-4 text-decoration-underline">Configuration - Jackett:</h3>
+          <div class="mb-4">
+            <label for="jackett-base-url" class="form-label">Jackett Base URL:</label>
+            <input type="text" class="form-control" id="jackett-base-url" placeholder="http://192.168.1.255:9117" v-model="jackett.baseUrl">
+            <small class="form-text text-muted">* <u>NOTE:</u> Jackett is a custom provider that you would host on your own server, and requires an in-depth technical setup. <a href="https://www.reddit.com/r/providers4syncler/comments/1adrc0r/jackett_provider_added_to_jakedup_packages/">More info</a></small>
+          </div>
+          <div class="mb-4">
+            <label for="jackett-api-key" class="form-label">Jackett API Key:</label>
+            <input type="text" class="form-control" id="jackett-api-key" placeholder="abcdefghijklmnopqrstuvwxyz123456" v-model="jackett.apiKey">
+            <small class="form-text text-muted">* <u>NOTE:</u> Jackett is a custom provider that you would host on your own server, and requires an in-depth technical setup. <a href="https://www.reddit.com/r/providers4syncler/comments/1adrc0r/jackett_provider_added_to_jakedup_packages/">More info</a></small>
+          </div>
+        </div>
+        <div class="mb-5 border-bottom pb-5">
+          <h3 class="h5 mb-4 text-decoration-underline">Configuration - Blacklist:</h3>
+          <div class="mb-4" v-if="Object.keys(express.providers).length">
             <label for="express-blacklist" class="form-label">Blacklisted Providers:</label>
             <select class="form-select" multiple size="10" id="express-blacklist" v-model="express.blacklist">
               <option disabled>Select multiple options...</option>
@@ -74,22 +91,22 @@
             <small class="form-text text-muted">* Blacklist providers to be removed from your custom package -- It is NOT RECOMMENDED to use this feature unless you know what you are doing!</small>
           </div>
         </div>
-        <div class="mb-5">
-          <h3 class="h5 mb-3 text-decoration-underline">{{ key == 'vendor' ? 'Vendor' : 'Package' }} URL:</h3>
+        <div class="mb-5 border-bottom pb-5">
+          <h3 class="h5 mb-4 text-decoration-underline">{{ key == 'vendor' ? 'Vendor' : 'Package' }} URL:</h3>
           <p>
-            <a class="c-package-link btn btn-success" :href="key == 'vendor' ? vendorUrl : expressUrl" target="_new">{{ key == 'vendor' ? vendorUrl : expressUrl }}</a>
+            Copy the following URL into Syncler...
           </p>
-        </div>
-        <div class="mb-5" v-if="key == 'vendor'">
-          <h3 class="h5 mb-3 text-decoration-underline">Shorten URL:</h3>
           <p>
-            Tip: Use a URL shortening service such as <a href="https://bit.ly/" target="_new">Bit.ly</a> to easily input the vendor manifest URL into the Syncler app.
+            <a class="c-package-link btn btn-success" :href="key == 'vendor' ? vendorUrl : expressUrl">{{ key == 'vendor' ? vendorUrl : expressUrl }}</a>
+          </p>
+          <p v-if="key == 'vendor'">
+            <u>Tip:</u> Use a URL shortening service such as <a href="https://bit.ly/">Bit.ly</a> to easily input the vendor manifest URL into the Syncler app.
           </p>
         </div>
       </div>
-      <div class="tab-pane fade" id="kosmos-justwatch" role="tabpanel" aria-labelledby="kosmos-justwatch-tab" tabindex="0">
-        <div class="mb-5">
-          <h2 class="mb-3">Kosmos Package — JustWatch</h2>
+      <div class="c-tab-pane tab-pane fade" id="kosmos-justwatch" role="tabpanel" aria-labelledby="kosmos-justwatch-tab" tabindex="0">
+        <div class="mb-5 border-bottom pb-5">
+          <h2 class="mb-4">Kosmos Package — JustWatch</h2>
           <p>
             <u>2024/01/23:</u> Do not use! This package is no longer working due to a change in JustWatch's APIs. Needs to be re-coded from the ground up, which is on my to-do list.
           </p>
@@ -100,9 +117,9 @@
             You can copy the package URL as-is, or you can use the additional configuration options below...
           </p>
         </div>
-        <div class="mb-5">
-          <h3 class="h5 mb-3 text-decoration-underline">Configuration:</h3>
-          <div class="mb-5">
+        <div class="mb-5 border-bottom pb-5">
+          <h3 class="h5 mb-4 text-decoration-underline">Configuration:</h3>
+          <div class="mb-4">
             <div class="form-check">
               <input type="radio" class="form-check-input" name="justwatch-mode" value="default" id="justwatch1" autocomplete="off" v-model="justwatch.mode">
               <label class="form-check-label" for="justwatch1">All Providers</label>
@@ -117,7 +134,7 @@
             </div>
           </div>
           <template v-for="(mode, index) in ['whitelist', 'blacklist']">
-            <div class="mb-5" v-if="justwatch.mode == mode">
+            <div class="mb-4" v-if="justwatch.mode == mode">
               <label :for="`justwatch-${mode}`" class="form-label">{{ mode == 'whitelist' ? 'Whitelisted' : 'Blacklisted'}} Streaming Providers:</label>
               <select class="form-select" multiple size="14" :id="`justwatch-${mode}`" v-model="justwatch[mode]">
                 <option disabled>Select multiple options...</option>
@@ -128,13 +145,27 @@
             </div>
           </template>
         </div>
-        <div class="mb-5">
-          <h3 class="h5 mb-3 text-decoration-underline">Package URL:</h3>
+        <div class="mb-5 border-bottom pb-5">
+          <h3 class="h5 mb-4 text-decoration-underline">Package URL:</h3>
           <p>
-            <a class="c-package-link btn btn-success" :href="justwatchUrl" target="_new">{{ justwatchUrl }}</a>
+            Copy the following URL into Syncler...
+          </p>
+          <p>
+            <a class="c-package-link btn btn-success" :href="justwatchUrl">{{ justwatchUrl }}</a>
           </p>
         </div>
       </div>
+    </div>
+    <div class="c-donate-links">
+      <h3 class="h5 mb-4 text-decoration-underline">Support The Project:</h3>
+      <p>
+        If you would like to help subsidize the monthly server costs, please donate a buck or 2 through one of the following links:
+      </p>
+      <ul class="c-list-inline">
+        <li><a class="btn btn-light" href="https://buymeacoffee.com/JakedUp">Buy Me A Coffee</a></li>
+        <li><a class="btn btn-light" href="https://venmo.com/JustJakedUp">Venmo</a></li>
+        <li><a class="btn btn-light" href="https://paypal.me/JustJakedUp">PayPal</a></li>
+      </ul>
     </div>
   </div>
 </div>

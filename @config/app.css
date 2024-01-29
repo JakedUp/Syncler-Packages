@@ -92,8 +92,16 @@ a:hover {
 @media (min-width: 576px) {
   .c-body {
     padding-top: 60px;
-    padding-bottom: 30px;
+    padding-bottom: 60px;
   }
+}
+
+.c-tab-pane .form-label {
+  font-weight: bold;
+}
+
+.c-tab-pane [class*="pb-"] > :last-child {
+  margin-bottom: 0!important;
 }
 
 .c-list-inline {
@@ -112,4 +120,8 @@ a:hover {
 
 .c-package-link {
   user-select: text;
+}
+
+.c-donate-links .c-list-inline li + li:before {
+  content: " | ";
 }
