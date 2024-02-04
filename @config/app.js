@@ -120,15 +120,17 @@ const App = Vue.createApp({
     });
   },
   mounted() {
-    let $navTabs = $(`#tabs .nav-link`);
+    const $navTabs = $(`#tabs .nav-link`);
     if (window.location.search) {
-      var urlParams = new URLSearchParams(window.location.search);
-      $navTabs.filter(`[data-bs-target="#${urlParams.get('id')}"]`).click();
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get('id');
+      $navTabs.filter(`[data-bs-target="#${id}"]`).click();
     }
     $navTabs.on('shown.bs.tab', function (event) {
-      var urlParams = new URLSearchParams(window.location.search);
-      urlParams.set('id', $(event.target).attr('data-bs-target').replace(/^#/, ''));
-      var newUrl = window.location.pathname + '?' + urlParams.toString();
+      const id = $(event.target).attr('data-bs-target').replace(/^#/, '');
+      const urlParams = new URLSearchParams(window.location.search);
+      urlParams.set('id', id);
+      const newUrl = window.location.pathname + '?' + urlParams.toString();
       history.replaceState(null, null, newUrl);
     });
   }

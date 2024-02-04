@@ -26,7 +26,7 @@
 <div class="container">
   <h1 class="border-bottom pb-2 mb-5">JakedUp Package Configurator</h1>
   <div class="c-app" v-cloak>
-    <h3 class="h5 mb-4 text-decoration-underline">Packages:</h3>
+    <h3 class="h5 mb-4 text-decoration-underline">Available Packages:</h3>
     <ul class="nav nav-pills mb-5 border-bottom pb-5" id="tabs" role="tablist">
       <li class="nav-item" role="presentation" v-for="(value, key, index) in {'vendor-hybrid': 'Vendor Manifest — Hybrid', 'express-hybrid': 'Express Package — Hybrid', 'kosmos-justwatch': 'Kosmos Package — JustWatch'}">
         <button :class="`nav-link ${index == 0 ? 'active' : ''}`" :id="`${key}-tab`" data-bs-toggle="pill" :data-bs-target="`#${key}`" type="button" role="tab" :aria-controls="key" aria-selected="true">{{ value }}</button>
@@ -42,26 +42,28 @@
           <ul class="c-list-inline mb-4">
             Packages combined include:
             <li v-for="(package_url, package_name, pacakge_index) in (key == 'vendor' ? {...express.packages, ...kosmos.packages} : express.packages)"><a :href="package_url">{{ package_name }}</a></li>
-            + custom providers
+            + custom providers.
           </ul>
           <p>
             You can copy the package URL as-is, or if you want a customized package, you can use the additional configuration options below...
           </p>
-          <p>
-            <u>NOTE:</u> To get an Orion API key, please visit: <a href="https://panel.orionoid.com/">https://panel.orionoid.com/</a>
-          </p>
         </div>
         <div class="mb-5 border-bottom pb-5">
-          <h3 class="h5 mb-4 text-decoration-underline">Configuration:</h3>
+          <h3 class="h5 mb-4 text-decoration-underline">Configuration Options:</h3>
           <div class="accordion" :id="`${key}-accordion`">
             <div class="accordion-item">
               <h2 class="accordion-header">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="`#${key}-collapse-orion`" aria-expanded="true" :aria-controls="`${key}-collapse-orion`">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="`#${key}-collapse-orion`" aria-expanded="true" :aria-controls="`${key}-collapse-orion`">
                   Orion
                 </button>
               </h2>
-              <div :id="`${key}-collapse-orion`" class="accordion-collapse collapse show" :data-bs-parent="`#${key}-accordion`">
+              <div :id="`${key}-collapse-orion`" class="accordion-collapse collapse" :data-bs-parent="`#${key}-accordion`">
                 <div class="accordion-body">
+                  <div class="mb-4">
+                    <p class="text-muted">
+                      <em><u>NOTE:</u> To get an Orion API key, please visit: <a href="https://panel.orionoid.com/">https://panel.orionoid.com/</a> and sign up for an account.</em>
+                    </p>
+                  </div>
                   <div class="mb-4">
                     <label for="orion-api-key" class="form-label">Orion API Key:</label>
                     <input type="text" class="form-control text-uppercase" id="orion-api-key" placeholder="ABCDEFGHIJKLMNOPQRSTUVWXYZ123456" v-model="orion.apiKey">
@@ -87,14 +89,19 @@
               <div :id="`${key}-collapse-jackett`" class="accordion-collapse collapse" :data-bs-parent="`#${key}-accordion`">
                 <div class="accordion-body">
                   <div class="mb-4">
+                    <p class="text-muted">
+                      <em><u>NOTE:</u> Jackett is a custom provider that you would host on your own server, and requires an in-depth technical setup. <a href="https://www.reddit.com/r/providers4syncler/comments/1adrc0r/jackett_provider_added_to_jakedup_packages/">More info</a></em>
+                    </p>
+                  </div>
+                  <div class="mb-4">
                     <label for="jackett-base-url" class="form-label">Jackett Base URL:</label>
                     <input type="text" class="form-control" id="jackett-base-url" placeholder="http://192.168.1.255:9117" v-model="jackett.baseUrl">
-                    <small class="form-text text-muted">* <u>NOTE:</u> Jackett is a custom provider that you would host on your own server, and requires an in-depth technical setup. <a href="https://www.reddit.com/r/providers4syncler/comments/1adrc0r/jackett_provider_added_to_jakedup_packages/">More info</a></small>
+                    <small class="form-text text-muted">* <u>NOTE:</u> This address should be accessible by other devices on your local network, which includes the device with Syncler</small>
                   </div>
                   <div class="mb-4">
                     <label for="jackett-api-key" class="form-label">Jackett API Key:</label>
                     <input type="text" class="form-control" id="jackett-api-key" placeholder="abcdefghijklmnopqrstuvwxyz123456" v-model="jackett.apiKey">
-                    <small class="form-text text-muted">* <u>NOTE:</u> Jackett is a custom provider that you would host on your own server, and requires an in-depth technical setup. <a href="https://www.reddit.com/r/providers4syncler/comments/1adrc0r/jackett_provider_added_to_jakedup_packages/">More info</a></small>
+                    <small class="form-text text-muted">* <u>NOTE:</u> Your private Jackett API key can be found in the upper-right corner of your Jackett web UI admin panel</small>
                   </div>
                 </div>
               </div>
@@ -148,15 +155,15 @@
           </p>
         </div>
         <div class="mb-5 border-bottom pb-5">
-          <h3 class="h5 mb-4 text-decoration-underline">Configuration:</h3>
+          <h3 class="h5 mb-4 text-decoration-underline">Configuration Options:</h3>
           <div class="accordion" id="justwatch-accordion">
             <div class="accordion-item">
               <h2 class="accordion-header">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#justwatch-collapse-providers" aria-expanded="true" aria-controls="justwatch-collapse-providers">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#justwatch-collapse-providers" aria-expanded="true" aria-controls="justwatch-collapse-providers">
                   Providers
                 </button>
               </h2>
-              <div id="justwatch-collapse-providers" class="accordion-collapse collapse show" data-bs-parent="#justwatch-accordion">
+              <div id="justwatch-collapse-providers" class="accordion-collapse collapse" data-bs-parent="#justwatch-accordion">
                 <div class="accordion-body">
                   <div class="mb-4">
                     <div class="form-check">
