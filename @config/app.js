@@ -1,9 +1,8 @@
+const urlParams = new URLSearchParams(window.location.search);
 const App = Vue.createApp({
   data() {
     return {
-      url: {
-        server: 'https://syncler-providers.herokuapp.com/syncler'
-      },
+      version: urlParams.get('v') == 2 ? 2 : 1,
       express: {
         packages: {
           'OpenScrapers': 'https://raw.githubusercontent.com/SynclerScrapers/OpenScrapers/main/express/openscraper.json',
@@ -52,6 +51,11 @@ const App = Vue.createApp({
     }
   },
   computed: {
+    url() {
+      return {
+        server: this.version == 2 ? 'https://jakedup.com/syncler' : 'https://syncler-providers.herokuapp.com/syncler'
+      }
+    },
     expressQuery() {
       const params = {};
       if (this.orion.apiKey) {
@@ -71,10 +75,10 @@ const App = Vue.createApp({
       return query ? `?${query}` : '';
     },
     vendorUrl() {
-      return `${this.url.server}/vendor-hybrid.json${this.expressQuery}`
+      return `${this.url.server}/vendor${this.version == 2 ? '' : '-hybrid'}.json${this.expressQuery}`
     },
     expressUrl() {
-      return `${this.url.server}/express-hybrid.json${this.expressQuery}`
+      return `${this.url.server}/express${this.version == 2 ? '' : '-hybrid'}.json${this.expressQuery}`
     },
     justwatchQuery() {
       const params = {};
@@ -88,7 +92,7 @@ const App = Vue.createApp({
       return query ? `?${query}` : '';
     },
     justwatchUrl() {
-      return `${this.url.server}/kosmos-justwatch.js${this.justwatchQuery}`
+      return `${this.url.server}/${this.version == 2 ? '' : 'kosmos-'}justwatch.js${this.justwatchQuery}`
     }
   },
   watch: {
@@ -103,32 +107,22 @@ const App = Vue.createApp({
     getProviders: function () {
       return fetch(this.expressUrl)
         .then(response => response.json())
-        /*
-        .then(json => Object.keys(json).filter(key => !key.includes('_manifest')).reduce((result, key) => ({...result, [key]: json[key].name}), {}));
-        */
         .then(json => Object.fromEntries(Object.entries(json).filter(([key, value]) => key !== '_manifest')));
     }
   },
   created() {
     this.getProviders().then((providers) => {
-      /*
-      providers.orion = {
-        name: 'Orion'
-      };
-      */
       this.express.providers = providers;
     });
   },
   mounted() {
     const $navTabs = $(`#tabs .nav-link`);
-    if (window.location.search) {
-      const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.size) {
       const id = urlParams.get('id');
       $navTabs.filter(`[data-bs-target="#${id}"]`).click();
     }
     $navTabs.on('shown.bs.tab', function (event) {
       const id = $(event.target).attr('data-bs-target').replace(/^#/, '');
-      const urlParams = new URLSearchParams(window.location.search);
       urlParams.set('id', id);
       const newUrl = window.location.pathname + '?' + urlParams.toString();
       history.replaceState(null, null, newUrl);
