@@ -72,8 +72,8 @@
                   <div class="mb-4" v-if="!orion.apiKey">
                     <label for="orion-common-providers" class="form-label">Orion Common Providers:</label>
                     <select class="form-control form-select" id="orion-common-providers" v-model.number="orion.commonProviders">
-                      <option value="1">Include Orion's common providers</option>
-                      <option value="0">Exclude Orion's common providers</option>
+                      <option value="on">Include Orion's common providers</option>
+                      <option value="off">Exclude Orion's common providers</option>
                     </select>
                     <small class="form-text text-muted">* Only exclude common providers if you plan on installing Orion's Syncler/Wako packages manually -- otherwise, keep this enabled</small>
                   </div>

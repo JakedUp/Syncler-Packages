@@ -1,26 +1,28 @@
+(function() {
+
 const urlParams = new URLSearchParams(window.location.search);
 const App = Vue.createApp({
   data() {
     return {
-      version: urlParams.get('v') == 2 ? 2 : 1,
       express: {
         packages: {
           'OpenScrapers': 'https://raw.githubusercontent.com/SynclerScrapers/OpenScrapers/main/express/openscraper.json',
           'Orion - Wako': 'https://wako.orionoid.com/ABCDEFGHIJKLMNOPQRSTUVWXYZ123456',
           'Squizzle - Fast': 'https://raw.githubusercontent.com/providers4syncler/providers/main/fast',
           'Squizzle - Ultimate': 'https://raw.githubusercontent.com/providers4syncler/providers/main/squizzle',
-          'Aki07 - Unified': 'https://raw.githubusercontent.com/itzAki07/scraper/main/scraper.json',
+          'Syncler.ml - Providers': 'https://pastebin.com/raw/Rue82khh?source=http://go.syncler.ml/express',
+          'Aki07 - Unified': 'https://pastebin.com/raw/jgCnPnwR?source=https://raw.githubusercontent.com/itzAki07/scraper/main/scraper.json',
         },
         providers: {},
-        blacklist: []
+        blacklist: (urlParams.get('blacklist') || '').split(',').filter(Boolean)
       },
       orion: {
-        apiKey: '',
-        commonProviders: 1
+        apiKey: urlParams.get('orionApiKey') || '',
+        commonProviders: urlParams.get('commonProviders') || 'on'
       },
       jackett: {
-        baseUrl: '',
-        apiKey: ''
+        baseUrl: urlParams.get('jackettBaseUrl') || '',
+        apiKey: urlParams.get('jackettApiKey') || ''
       },
       kosmos: {
         packages: {
@@ -51,61 +53,78 @@ const App = Vue.createApp({
     }
   },
   computed: {
-    url() {
+    server() {
+      const version = urlParams.get('v') == 2 ? 2 : 1;
       return {
-        server: this.version == 2 ? 'https://jakedup.com/syncler' : 'https://syncler-providers.herokuapp.com/syncler'
-      }
+        version: version,
+        url: version == 2 ? 'https://jakedup.com/syncler' : 'https://syncler-providers.herokuapp.com/syncler'
+      };
     },
-    expressQuery() {
+    expressParams() {
       const params = {};
       if (this.orion.apiKey) {
-        params['orion-api-key'] = this.orion.apiKey;
+        if (this.server.version == 2) {
+          params['orionApiKey'] = this.orion.apiKey;
+        } else {
+          params['orion-api-key'] = this.orion.apiKey;
+        }
       }
-      if (!this.orion.commonProviders) {
-        params['exclude-orion'] = true;
+      if (this.orion.commonProviders === 'off') {
+        if (this.server.version == 2) {
+          params['commonProviders'] = 'off';
+        } else {
+          params['exclude-orion'] = true;
+        }
       }
       if (this.jackett.baseUrl && this.jackett.apiKey) {
-        params['jackett-base-url'] = this.jackett.baseUrl.replace(/[\/\s]+$/, '');
-        params['jackett-api-key'] = this.jackett.apiKey;
+        if (this.server.version == 2) {
+          params['jackettBaseUrl'] = this.jackett.baseUrl.replace(/[\/\s]+$/, '');
+          params['jackettApiKey'] = this.jackett.apiKey;
+        } else {
+          params['jackett-base-url'] = this.jackett.baseUrl.replace(/[\/\s]+$/, '');
+          params['jackett-api-key'] = this.jackett.apiKey;
+        }
       }
       if (this.express.blacklist.length) {
-        params.blacklist = this.express.blacklist.join(',');
+        params['blacklist'] = this.express.blacklist.join(',');
       }
-      const query = new URLSearchParams(params).toString().replace(/%2C/g, ',');
-      return query ? `?${query}` : '';
+      return params;
     },
     vendorUrl() {
-      return `${this.url.server}/vendor${this.version == 2 ? '' : '-hybrid'}.json${this.expressQuery}`
+      return `${this.server.url}/${this.server.version == 2 ? 'vendor' : 'vendor-hybrid.json'}${this.paramsToQuery(this.expressParams)}`;
     },
     expressUrl() {
-      return `${this.url.server}/express${this.version == 2 ? '' : '-hybrid'}.json${this.expressQuery}`
+      return `${this.server.url}/${this.server.version == 2 ? 'express' : 'express-hybrid.json'}${this.paramsToQuery(this.expressParams)}`;
     },
-    justwatchQuery() {
+    justwatchParams() {
       const params = {};
       if (this.justwatch.mode == 'whitelist' && this.justwatch.whitelist.length) {
-        params.whitelist = this.justwatch.whitelist.join(',');
+        params['whitelist'] = this.justwatch.whitelist.join(',');
       } else
       if (this.justwatch.mode == 'blacklist' && this.justwatch.blacklist.length) {
-        params.blacklist = this.justwatch.blacklist.join(',');
+        params['blacklist'] = this.justwatch.blacklist.join(',');
       }
-      const query = new URLSearchParams(params).toString().replace(/%2C/g, ',');
-      return query ? `?${query}` : '';
+      return params;
     },
     justwatchUrl() {
-      return `${this.url.server}/${this.version == 2 ? '' : 'kosmos-'}justwatch.js${this.justwatchQuery}`
+      return `${this.server.url}/${this.server.version == 2 ? '' : 'kosmos-'}justwatch.js${this.paramsToQuery(this.justwatchParams)}`;
     }
   },
   watch: {
     'orion.apiKey': function (newVal, oldVal) {
       if (newVal) {
         this.orion.apiKey = newVal.toUpperCase();
-        this.orion.commonProviders = 1;
+        this.orion.commonProviders = 'on';
       }
     }
   },
   methods: {
+    paramsToQuery: function (params) {
+      const query = new URLSearchParams(params || {}).toString().replace(/%2C/g, ',');
+      return query ? `?${query}` : '';
+    },
     getProviders: function () {
-      return fetch(this.expressUrl)
+      return fetch(this.expressUrl.replace(/\?.*/, ''))
         .then(response => response.json())
         .then(json => Object.fromEntries(Object.entries(json).filter(([key, value]) => key !== '_manifest')));
     }
@@ -113,7 +132,7 @@ const App = Vue.createApp({
   created() {
     this.getProviders().then((providers) => {
       this.express.providers = providers;
-    });
+    }).catch((error) => console.error('Failed to fetch providers list'))
   },
   mounted() {
     const $navTabs = $(`#tabs .nav-link`);
@@ -127,7 +146,18 @@ const App = Vue.createApp({
       const newUrl = window.location.pathname + '?' + urlParams.toString();
       history.replaceState(null, null, newUrl);
     });
+    if (urlParams.size) {
+      const newParams = new URLSearchParams();
+      urlParams.has('v') && newParams.set('v', urlParams.get('v'));
+      urlParams.has('id') && newParams.set('id', urlParams.get('id'));
+      const newUrl = window.location.pathname + '?' + newParams.toString();
+      history.replaceState(null, null, newUrl);
+    }
   }
 });
 
 App.mount('.c-app');
+
+window.App = App;
+
+}())
