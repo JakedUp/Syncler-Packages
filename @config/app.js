@@ -17,12 +17,12 @@ const App = Vue.createApp({
         blacklist: (urlParams.get('blacklist') || '').split(',').filter(Boolean)
       },
       orion: {
-        apiKey: urlParams.get('orionApiKey') || '',
-        commonProviders: urlParams.get('commonProviders') || 'on'
+        apiKey: urlParams.get('orion-api-key') || '',
+        commonProviders: urlParams.get('common-providers') || 'on'
       },
       jackett: {
-        baseUrl: urlParams.get('jackettBaseUrl') || '',
-        apiKey: urlParams.get('jackettApiKey') || ''
+        baseUrl: urlParams.get('jackett-base-url') || '',
+        apiKey: urlParams.get('jackett-api-key') || ''
       },
       kosmos: {
         packages: {
@@ -63,27 +63,18 @@ const App = Vue.createApp({
     expressParams() {
       const params = {};
       if (this.orion.apiKey) {
-        if (this.server.version == 2) {
-          params['orionApiKey'] = this.orion.apiKey;
-        } else {
-          params['orion-api-key'] = this.orion.apiKey;
-        }
+        params['orion-api-key'] = this.orion.apiKey;
       }
       if (this.orion.commonProviders === 'off') {
         if (this.server.version == 2) {
-          params['commonProviders'] = 'off';
+          params['common-providers'] = 'off';
         } else {
           params['exclude-orion'] = true;
         }
       }
       if (this.jackett.baseUrl && this.jackett.apiKey) {
-        if (this.server.version == 2) {
-          params['jackettBaseUrl'] = this.jackett.baseUrl.replace(/[\/\s]+$/, '');
-          params['jackettApiKey'] = this.jackett.apiKey;
-        } else {
-          params['jackett-base-url'] = this.jackett.baseUrl.replace(/[\/\s]+$/, '');
-          params['jackett-api-key'] = this.jackett.apiKey;
-        }
+        params['jackett-base-url'] = this.jackett.baseUrl.replace(/[\/\s]+$/, '');
+        params['jackett-api-key'] = this.jackett.apiKey;
       }
       if (this.express.blacklist.length) {
         params['blacklist'] = this.express.blacklist.join(',');
@@ -107,7 +98,7 @@ const App = Vue.createApp({
       return params;
     },
     justwatchUrl() {
-      return `${this.server.url}/${this.server.version == 2 ? '' : 'kosmos-'}justwatch.js${this.paramsToQuery(this.justwatchParams)}`;
+      return `${this.server.url}/${this.server.version == 2 ? 'justwatch.js' : 'kosmos-justwatch.js'}${this.paramsToQuery(this.justwatchParams)}`;
     }
   },
   watch: {
