@@ -54,7 +54,7 @@ const App = Vue.createApp({
   },
   computed: {
     server() {
-      const version = urlParams.get('v') == 2 ? 2 : 1;
+      const version = urlParams.get('v') == 1 ? 1 : 2;
       return {
         version: version,
         url: version == 2 ? 'https://jakedup.com/syncler' : 'https://syncler-providers.herokuapp.com/syncler'
