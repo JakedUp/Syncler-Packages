@@ -104,7 +104,7 @@ const App = Vue.createApp({
   watch: {
     'orion.apiKey': function (newVal, oldVal) {
       if (newVal) {
-        this.orion.apiKey = newVal.toUpperCase();
+        this.orion.apiKey = newVal.replace(/\/+$/, '').replace(/^.*\/+/, '').toUpperCase();
         this.orion.commonProviders = 'on';
       }
     }
