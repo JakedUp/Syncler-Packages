@@ -1,15 +1,10 @@
 # Configure Your Package:
 
-The following Syncler v2 vendor manifests and Syncler v1 packages are available to be configured:
+The following Syncler v2 vendor manifests are available to be configured:
 
 ## Syncler v2:
 
 * [Vendor Manifest — Hybrid](https://jakedup.github.io/Syncler-Packages/@config/?id=vendor-hybrid)
-
-## Syncler v1:
-
-* [Express Package — Hybrid](https://jakedup.github.io/Syncler-Packages/@config/?id=express-hybrid)
-* [Kosmos Package — JustWatch](https://jakedup.github.io/Syncler-Packages/@config/?id=kosmos-justwatch)
 
 ---
 
