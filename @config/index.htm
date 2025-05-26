@@ -28,7 +28,7 @@
   <div class="c-app" v-cloak>
     <h3 class="h5 mb-4 text-decoration-underline">Available Packages:</h3>
     <ul class="nav nav-pills mb-5 border-bottom pb-5" id="tabs" role="tablist">
-      <li class="nav-item" role="presentation" v-for="(value, key, index) in {'vendor-hybrid': 'Vendor Manifest — Hybrid', 'express-hybrid': 'Express Package — Hybrid', 'kosmos-justwatch': 'Kosmos Package — JustWatch'}">
+      <li class="nav-item" role="presentation" v-for="(value, key, index) in {'vendor-hybrid': 'Vendor Manifest — Hybrid'/*, 'express-hybrid': 'Express Package — Hybrid', 'kosmos-justwatch': 'Kosmos Package — JustWatch'*/}">
         <button :class="`nav-link ${index == 0 ? 'active' : ''}`" :id="`${key}-tab`" data-bs-toggle="pill" :data-bs-target="`#${key}`" type="button" role="tab" :aria-controls="key" aria-selected="true">{{ value }}</button>
       </li>
     </ul>
